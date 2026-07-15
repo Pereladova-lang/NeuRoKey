@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuRoKey Пилот v1 — Техническое задание</title>
+<style>
+  :root { --primary:#6366F1; --secondary:#06B6D4; --bg:#F9FAFB; --card:#FFFFFF; --text:#111827; --muted:#6B7280; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:24px; }
+  .wrap { max-width:900px; margin:0 auto; }
+  header { background:linear-gradient(135deg,var(--primary),#7C3AED); color:#fff; border-radius:16px; padding:40px 32px; margin-bottom:24px; }
+  header h1 { font-size:32px; margin-bottom:8px; }
+  header p { opacity:.9; font-size:18px; }
+  .meta { display:flex; gap:16px; margin-top:16px; flex-wrap:wrap; }
+  .meta span { background:rgba(255,255,255,.15); border-radius:999px; padding:4px 14px; font-size:14px; }
+  section { background:var(--card); border-radius:12px; padding:28px 32px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h2 { color:var(--primary); font-size:22px; margin-bottom:14px; border-bottom:2px solid #EEF2FF; padding-bottom:8px; }
+  h3 { font-size:17px; margin:16px 0 8px; }
+  p, li { font-size:15px; }
+  ul { padding-left:22px; margin:8px 0; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+  th { background:#EEF2FF; color:var(--primary); text-align:left; padding:10px 12px; }
+  td { padding:10px 12px; border-bottom:1px solid #F3F4F6; vertical-align:top; }
+  code, pre { font-family:Consolas,monospace; background:#F3F4F6; border-radius:6px; }
+  code { padding:2px 6px; font-size:13px; }
+  pre { padding:14px 16px; overflow-x:auto; font-size:13px; margin:10px 0; }
+  .tag { display:inline-block; border-radius:6px; padding:2px 10px; font-size:13px; font-weight:600; margin-right:6px; }
+  .tag.in { background:#D1FAE5; color:#065F46; }
+  .tag.out { background:#F3F4F6; color:var(--muted); }
+  .status { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  .status div { background:#EEF2FF; border-radius:10px; padding:10px 16px; font-size:14px; }
+  .status b { color:var(--primary); }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:20px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🧠 NeuRoKey Пилот v1</h1>
+  <p>Техническое задание — пилотная веб-версия для детей 11–14 лет</p>
+  <div class="meta">
+    <span>📅 15 июля 2026</span>
+    <span>✅ Утверждено</span>
+    <span>🌿 feature/pilot-v1</span>
+  </div>
+</header>
+
+<section>
+  <h2>1. Цель и объём</h2>
+  <p>Веб-приложение-тренажёр для проверки главной гипотезы: <b>интересны ли трёхслойные нейрокогнитивные упражнения детям 11–14 лет и видят ли родители ценность в отчётах</b>.</p>
+  <p style="margin-top:10px">
+    <span class="tag in">✓ Детский интерфейс</span>
+    <span class="tag in">✓ Родительский портал (1 страница)</span>
+    <span class="tag in">✓ Подписка ЮKassa + триал 3 дня</span>
+  </p>
+  <p style="margin-top:6px">
+    <span class="tag out">✗ Блокировка контента</span>
+    <span class="tag out">✗ ИИ-анализ</span>
+    <span class="tag out">✗ Чат-бот (вместо него маскот)</span>
+    <span class="tag out">✗ Мобильные приложения</span>
+  </p>
+</section>
+
+<section>
+  <h2>2. Упражнения (3 типа, трёхслойные)</h2>
+  <table>
+    <tr><th>Тип</th><th>Академический слой</th><th>Когнитивный слой</th><th>Механика</th></tr>
+    <tr><td><b>🕵️ Комикс-детектив</b></td><td>Смысловое чтение</td><td>Логика, прогнозирование</td><td>Комикс 4–6 панелей, часть реплик скрыта — выбрать верную из 3</td></tr>
+    <tr><td><b>📊 Аналитик данных</b></td><td>Математика, статистика</td><td>Критическое мышление</td><td>График + вопросы «что можно / нельзя заключить»</td></tr>
+    <tr><td><b>🤖 Робо-логика</b></td><td>Основы алгоритмов</td><td>Планирование, контроль импульсов</td><td>Команды для робота через поле с ловушками; энергия ограничена</td></tr>
+  </table>
+  <ul>
+    <li>Контент: рукописные JSON-пулы — <b>10 вариантов × 3 уровня × 3 типа = 90 записей</b></li>
+    <li>Сессия = 3 упражнения (~2 мин каждое), итого 5–7 минут — жёсткий потолок</li>
+    <li>Ошибка ребёнка: подсказка + повтор. Никаких красных крестов и штрафов</li>
+    <li>Никаких лидербордов и сравнений с другими детьми</li>
+  </ul>
+</section>
+
+<section>
+  <h2>3. Адаптивность (rule-based, без ИИ)</h2>
+  <ul>
+    <li>Каждый результат пишет очки в 4 шкалы: <b>внимание, память, логика, контроль</b></li>
+    <li>Ротация: тип вчерашнего первого упражнения не ставится первым сегодня</li>
+    <li>Сложность: точность &gt;80% три раза подряд → уровень +1; &lt;50% → уровень −1</li>
+    <li>Алгоритм прозрачен и объясним родителю (триггер доверия)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Мотивация</h2>
+  <ul>
+    <li>🔥 Стрик (дни подряд с сессией), бейджи за серии</li>
+    <li>Уровни маскота: «Новичок» → «Мастер фокуса»</li>
+    <li>Маскот со статичными репликами (без LLM): приветствие, похвала, мягкая реакция</li>
+    <li>Позитивное подкрепление, ноль наказаний</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Подписка (ЮKassa)</h2>
+  <table>
+    <tr><th>Параметр</th><th>Значение</th></tr>
+    <tr><td>Триал</td><td>3 дня полного доступа без карты (конфиг в БД, для A/B 1 vs 3 дня)</td></tr>
+    <tr><td>Тариф</td><td>299 ₽/месяц, рекуррентный (автосписание)</td></tr>
+    <tr><td>Free tier после триала</td><td>1 упражнение в день</td></tr>
+    <tr><td>Статусы</td><td><code>trial → active → past_due (3 дня грейс) → expired / canceled</code></td></tr>
+    <tr><td>Отмена</td><td>В один клик в родительском портале</td></tr>
+    <tr><td>Webhooks</td><td><code>payment.succeeded</code> / <code>payment.canceled</code> + fallback-сверка при входе родителя</td></tr>
+  </table>
+  <p>Ребёнку после триала — мягкий экран «Попроси родителя продлить» (без вины).</p>
+</section>
+
+<section>
+  <h2>6. Технический стек</h2>
+  <ul>
+    <li>Next.js 15 (App Router) + TypeScript + Tailwind CSS + shadcn/ui</li>
+    <li>SQLite через Prisma (переезд на Postgres = смена конфига)</li>
+    <li>NextAuth: родитель — email+пароль; ребёнок — профиль + PIN (4 цифры)</li>
+    <li>ЮKassa через API-роуты Next.js; mock-режим для разработки</li>
+    <li>Тесты: Vitest (unit/integration) + Playwright (E2E)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>7. Модель данных</h2>
+  <pre>Parent        — id, email, passwordHash, createdAt
+Child         — id, parentId, name, age, pin, mascotLevel, streak
+Subscription  — id, parentId, status, trialEndsAt, paymentMethodId, nextBillingAt
+Exercise      — id, type (comic/data/robot), level (1-3), contentJson
+Session       — id, childId, startedAt, finishedAt, feedbackEmoji
+SessionResult — id, sessionId, exerciseId, accuracy, durationSec, scoresJson
+Achievement   — id, childId, badgeKey, earnedAt</pre>
+</section>
+
+<section>
+  <h2>8. Экраны (9)</h2>
+  <h3>Детские (6)</h3>
+  <ul>
+    <li>Выбор профиля + PIN</li>
+    <li>Главный: маскот, «Начать сессию», стрик</li>
+    <li>3 экрана упражнений</li>
+    <li>Итоги сессии: что развивал + эмодзи-фидбек (😍😊😐😕)</li>
+    <li>Карта прогресса / бейджи</li>
+  </ul>
+  <h3>Родительские (3)</h3>
+  <ul>
+    <li>Регистрация / вход</li>
+    <li>Дашборд: 4 шкалы с недельной динамикой, сессии, статус подписки</li>
+    <li>Подписка: оплата ЮKassa, отмена, история</li>
+  </ul>
+</section>
+
+<section>
+  <h2>9. Дизайн и качество</h2>
+  <ul>
+    <li>Светлая тема, акцент <code>#6366F1</code>, секондари <code>#06B6D4</code>, шрифт Inter</li>
+    <li>Детский текст ≥18px, кнопки ≥44px, переходы 200–300ms, WCAG AA</li>
+    <li>Прерванная сессия: сохраняется, продолжение в течение часа</li>
+    <li>Тесты: unit (движок), integration (API, подписка), E2E (happy-path сессии)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>📍 Статус реализации (на 15.07.2026)</h2>
+  <div class="status">
+    <div>✅ <b>Task 1</b> Скаффолд + БД</div>
+    <div>✅ <b>Task 2</b> 90 упражнений</div>
+    <div>✅ <b>Task 3</b> Движок (21/21 тестов)</div>
+    <div>⏳ <b>Task 4</b> Аутентификация</div>
+    <div>⬜ Tasks 5–13</div>
+  </div>
+  <p style="margin-top:12px; color:var(--muted)">Полный план: <code>PLAN.md</code> · Спека: <code>docs/superpowers/specs/2026-07-15-neurokey-pilot-design.md</code></p>
+</section>
+
+<footer>NeuRoKey · Пилот v1 · github.com/Pereladova-lang/NeuRoKey · ветка feature/pilot-v1</footer>
+</div>
+</body>
+</html>
