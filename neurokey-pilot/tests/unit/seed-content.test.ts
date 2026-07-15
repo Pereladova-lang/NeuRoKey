@@ -25,6 +25,36 @@ describe("seed content", () => {
       expect(s).toContain("F");
     }
   });
+
+  it("DataContent correctIndex is within bounds for every question", () => {
+    for (const d of dataTasks) {
+      for (const q of d.content.questions) {
+        expect(q.correctIndex).toBeGreaterThanOrEqual(0);
+        expect(q.correctIndex).toBeLessThan(q.options.length);
+      }
+    }
+  });
+
+  it("comic hiddenPanelIndex is within bounds and points at the null-speech panel", () => {
+    for (const c of comics) {
+      expect(c.content.hiddenPanelIndex).toBeGreaterThanOrEqual(0);
+      expect(c.content.hiddenPanelIndex).toBeLessThan(c.content.panels.length);
+      expect(c.content.panels[c.content.hiddenPanelIndex].speech).toBeNull();
+    }
+  });
+
+  it("robot grids are pairwise unique within each level pool", () => {
+    for (const level of [1, 2, 3] as const) {
+      const grids = robotTasks
+        .filter((r) => r.level === level)
+        .map((r) => JSON.stringify(r.content.grid));
+      const unique = new Set(grids);
+      expect(
+        unique.size,
+        `Expected 10 unique grids for level ${level}, found ${unique.size}`
+      ).toBe(grids.length);
+    }
+  });
 });
 
 describe("robot grid solvability (BFS)", () => {

@@ -11,7 +11,7 @@ export const dataTasks: { level: 1 | 2 | 3; content: DataContent }[] = [
       title: "Оценки за контрольные",
       chart: {
         labels: ["Пн", "Вт", "Ср", "Чт", "Пт"],
-        values: [4, 5, 3, 5, 4],
+        values: [4, 5, 3, 4, 4],
         yLabel: "Оценка",
       },
       questions: [
@@ -23,7 +23,7 @@ export const dataTasks: { level: 1 | 2 | 3; content: DataContent }[] = [
         {
           text: "Сколько раз за неделю была оценка 5?",
           options: ["1", "2", "3"],
-          correctIndex: 1,
+          correctIndex: 0,
         },
       ],
     },
