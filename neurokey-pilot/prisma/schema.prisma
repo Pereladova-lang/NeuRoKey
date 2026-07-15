@@ -68,6 +68,7 @@ model SessionResult {
   accuracy    Float    // 0..1
   durationSec Int
   scoresJson  String   // {"attention":n,"memory":n,"logic":n,"control":n}
+  createdAt   DateTime @default(now())
 }
 
 model Achievement {
