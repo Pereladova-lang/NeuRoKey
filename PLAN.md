@@ -746,9 +746,9 @@ export function checkAccess(
   - `POST /api/session/:id/submit` `{exerciseId, accuracy, durationSec}` → пишет `SessionResult` со `scoresJson = computeScores(...)`, 200 `{ok:true}`.
   - `POST /api/session/:id/finish` `{feedbackEmoji}` → ставит `finishedAt`, обновляет `streak` (по `nextStreak`), `mascotLevel = 1 + floor(totalSessions/5)` (кэп 5), создаёт новые `Achievement` (upsert по `@@unique`), возвращает `{streak, mascotLevel, newBadges, summary}` где `summary` — человекочитаемые строки «что развивал».
 
-- [ ] **Step 1: Падающий интеграционный тест** — полный цикл: register → child-login (взять cookie) → start (3 упражнения) → 3× submit → finish; проверки: `SessionResult` 3 шт., `streak === 1`, `newBadges` содержит `firstSession`; повторный start в тот же день при `expired`-подписке → 403 (подготовить подписку через `db.subscription.update({status:"canceled"})` и одну сессию). Тест пишется в стиле Task 4 (route-handlers как функции, cookie передаётся в `Request` headers).
+- [x] **Step 1: Падающий интеграционный тест** — полный цикл: register → child-login (взять cookie) → start (3 упражнения) → 3× submit → finish; проверки: `SessionResult` 3 шт., `streak === 1`, `newBadges` содержит `firstSession`; повторный start в тот же день при `expired`-подписке → 403 (подготовить подписку через `db.subscription.update({status:"canceled"})` и одну сессию). Тест пишется в стиле Task 4 (route-handlers как функции, cookie передаётся в `Request` headers).
 
-- [ ] **Step 2: FAIL → Step 3: Реализовать роуты.** Ключевой фрагмент `start`:
+- [x] **Step 2: FAIL → Step 3: Реализовать роуты.** Ключевой фрагмент `start`:
 
 ```ts
 const childId = getChildId(req);
@@ -777,7 +777,7 @@ return NextResponse.json({
 });
 ```
 
-- [ ] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: session lifecycle API (start/submit/finish)"`
+- [x] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: session lifecycle API (start/submit/finish)"`
 
 ---
 
