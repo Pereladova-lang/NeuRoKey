@@ -18,6 +18,7 @@
 - Когнитивные шкалы: `attention`, `memory`, `logic`, `control` (0–100).
 - Подписка: статусы `trial | active | past_due | expired | canceled`; триал 3 дня (конфиг в БД `Config.trialDays`); тариф 299 ₽/мес; free tier после триала = 1 упражнение в день.
 - TDD: каждая задача начинается с падающего теста. Коммит после каждой задачи.
+- **Приоритет (обновлено 09.08.2026):** Task «Родительский дашборд» перенесён с позиции 11 на позицию 7 (сразу после API сессий, до компонентов упражнений) — единственный элемент нашего УТП, уже физически посчитанный движком (`aggregateWeek`), и по конкурентному анализу это самое честное и быстрое отличие от Kids360/Alli360, у которых нет измеримого прогресса ребёнка. См. `recovered-uncommitted/конкурентный-анализ-Kids360.md`, раздел 10, рекомендация 3.
 
 ---
 
@@ -780,7 +781,27 @@ return NextResponse.json({
 
 ---
 
-### Task 7: Компонент упражнения «Комикс-детектив»
+### Task 7: Родительский дашборд
+
+> Приоритет поднят с изначальной позиции 11 (см. Global Constraints) — идёт сразу после API сессий, до компонентов упражнений.
+
+**Files:**
+- Create: `src/app/(parent)/parent/page.tsx` (вход/регистрация — форма на `/api/register` + NextAuth signIn), `src/app/(parent)/parent/dashboard/page.tsx`, `src/app/api/parent/stats/route.ts`, `src/components/ScaleBar.tsx`
+- Test: `tests/integration/parent-stats.test.ts`
+
+**Interfaces:**
+- Consumes: NextAuth session (Task 4), `aggregateWeek` (Task 3).
+- Produces: `GET /api/parent/stats` → `{ children: [{ id, name, streak, sessionsThisWeek, scales: {current, delta} }], subscription: { status, trialEndsAt, nextBillingAt } }` (401 без сессии).
+
+Дашборд: карточка ребёнка → 4 строки `ScaleBar` (название шкалы по-русски, полоса %, дельта «↑12%» зелёным / «↓» серым — не красным), сессий за неделю, стрик. Блок подписки: статус («Пробный период до 18 июля» / «Активна, следующее списание …»), кнопка «Управление подпиской» → Task 12.
+
+- [ ] **Step 1: Падающий тест** — сид: родитель + ребёнок + 2 завершённые сессии с результатами; `GET /api/parent/stats` с mock-сессией → `sessionsThisWeek === 2`, шкалы > 0; без сессии → 401.
+- [ ] **Step 2–4: FAIL → реализация → PASS.**
+- [ ] **Step 5: Commit** — `git commit -m "feat: parent dashboard with weekly cognitive stats"`
+
+---
+
+### Task 8: Компонент упражнения «Комикс-детектив»
 
 **Files:**
 - Create: `src/components/exercises/ComicExercise.tsx`, `src/components/exercises/types.ts`
@@ -803,14 +824,14 @@ export type ExerciseProps<C> = { content: C; onComplete: (r: ExerciseResult) => 
 
 ---
 
-### Task 8: Компонент «Аналитик данных»
+### Task 9: Компонент «Аналитик данных»
 
 **Files:**
 - Create: `src/components/exercises/DataExercise.tsx`, `src/components/exercises/BarChart.tsx`
 - Test: `tests/unit/data-exercise.test.tsx`
 
 **Interfaces:**
-- Consumes: `ExerciseProps<DataContent>` (Task 7).
+- Consumes: `ExerciseProps<DataContent>` (Task 8).
 - Produces: `BarChart` — чистый SVG-бар-чарт без внешних библиотек (`labels`, `values`, `yLabel`; цвет `#6366F1`).
 
 Механика: показывается график, затем вопросы по одному (2–3). Каждый вопрос — 3 варианта. `accuracy` = среднее по вопросам (та же шкала попыток, что в Task 7). После последнего вопроса → `onComplete`.
@@ -821,7 +842,7 @@ export type ExerciseProps<C> = { content: C; onComplete: (r: ExerciseResult) => 
 
 ---
 
-### Task 9: Компонент «Робо-логика»
+### Task 10: Компонент «Робо-логика»
 
 **Files:**
 - Create: `src/components/exercises/RobotExercise.tsx`, `src/lib/robot-sim.ts`
@@ -846,7 +867,7 @@ UI: сетка-поле, панель команд (кнопки-стрелки 
 
 ---
 
-### Task 10: Детские экраны (вход, главный, сессия, итоги, прогресс)
+### Task 11: Детские экраны (вход, главный, сессия, итоги, прогресс)
 
 **Files:**
 - Create: `src/app/(child)/child/page.tsx` (выбор профиля + PIN), `src/app/(child)/child/home/page.tsx`, `src/app/(child)/child/session/page.tsx`, `src/app/(child)/child/progress/page.tsx`, `src/components/Mascot.tsx`, `src/lib/mascot-lines.ts`
@@ -854,7 +875,7 @@ UI: сетка-поле, панель команд (кнопки-стрелки 
 - Test: `tests/unit/mascot-lines.test.ts`
 
 **Interfaces:**
-- Consumes: API Task 6, компоненты Task 7–9.
+- Consumes: API Task 6, компоненты Task 8–10.
 - Produces: `getMascotLine(context: "greeting" | "sessionDone" | "comeback" | "levelUp" | "trialEnded"): string` — случайная реплика из статичного пула ≥3 на контекст, на русском, дружелюбный тон без вины.
 
 Экран сессии: получает `exercises` от `/api/session/start`, рендерит по одному через маппинг `type → компонент`, после каждого `onComplete` шлёт `/submit`, после последнего — экран итогов: список «Сегодня ты развивал: внимание, логику…» (из типов упражнений, упрощённым языком), выбор эмодзи (😍😊😐😕 → `love|good|meh|bad`) → `/finish` → показ стрика, новых бейджей, реплики маскота. При 403 `free_tier_limit` — мягкий экран: маскот + «На сегодня всё! Новая тренировка — завтра. Попроси родителя продлить полный доступ». Главный экран: маскот с приветствием, стрик 🔥, большая кнопка «Начать сессию», ссылка «Мои успехи». Прогресс: уровень маскота, сетка бейджей (заработанные цветные, остальные серые).
@@ -862,24 +883,6 @@ UI: сетка-поле, панель команд (кнопки-стрелки 
 - [ ] **Step 1: Падающий тест `mascot-lines`** — каждый контекст возвращает непустую строку из своего пула; пулы ≥3 реплик.
 - [ ] **Step 2–4: FAIL → реализация → PASS.** Ручная проверка: `npm run dev`, пройти полный флоу ребёнком.
 - [ ] **Step 5: Commit** — `git commit -m "feat: child screens (login, home, session flow, progress)"`
-
----
-
-### Task 11: Родительский дашборд
-
-**Files:**
-- Create: `src/app/(parent)/parent/page.tsx` (вход/регистрация — форма на `/api/register` + NextAuth signIn), `src/app/(parent)/parent/dashboard/page.tsx`, `src/app/api/parent/stats/route.ts`, `src/components/ScaleBar.tsx`
-- Test: `tests/integration/parent-stats.test.ts`
-
-**Interfaces:**
-- Consumes: NextAuth session (Task 4), `aggregateWeek` (Task 3).
-- Produces: `GET /api/parent/stats` → `{ children: [{ id, name, streak, sessionsThisWeek, scales: {current, delta} }], subscription: { status, trialEndsAt, nextBillingAt } }` (401 без сессии).
-
-Дашборд: карточка ребёнка → 4 строки `ScaleBar` (название шкалы по-русски, полоса %, дельта «↑12%» зелёным / «↓» серым — не красным), сессий за неделю, стрик. Блок подписки: статус («Пробный период до 18 июля» / «Активна, следующее списание …»), кнопка «Управление подпиской» → Task 12.
-
-- [ ] **Step 1: Падающий тест** — сид: родитель + ребёнок + 2 завершённые сессии с результатами; `GET /api/parent/stats` с mock-сессией → `sessionsThisWeek === 2`, шкалы > 0; без сессии → 401.
-- [ ] **Step 2–4: FAIL → реализация → PASS.**
-- [ ] **Step 5: Commit** — `git commit -m "feat: parent dashboard with weekly cognitive stats"`
 
 ---
 
@@ -914,7 +917,7 @@ export function nextSubscriptionState(
   - `POST /api/billing/checkout` → создаёт платёж 299 ₽ с `save_payment_method: true`, `metadata: {parentId}`, возвращает `{confirmationUrl}` (redirect ЮKassa).
   - `POST /api/billing/webhook` — принимает `payment.succeeded` / `payment.canceled`, находит подписку по `metadata.parentId`, применяет `nextSubscriptionState`, 200 всегда (идемпотентно).
   - `POST /api/billing/cancel` → `cancel_requested`.
-  - Fallback-сверка: при `GET /api/parent/stats` (Task 11 — modify) если `status === "past_due"` и `nextBillingAt + 3д < now` → применить `grace_expired`.
+  - Fallback-сверка: при `GET /api/parent/stats` (Task 7 — modify) если `status === "past_due"` и `nextBillingAt + 3д < now` → применить `grace_expired`.
 
 - [ ] **Step 1: Падающие unit-тесты `nextSubscriptionState`** — все переходы из спеки: trial+succeeded→active; active+canceled→past_due; past_due+grace_expired→expired; active+cancel_requested→canceled; повторный succeeded в active → active (идемпотентность, обновляется nextBillingAt).
 - [ ] **Step 2: FAIL → Step 3: Реализовать `billing.ts`, `yookassa.ts`, роуты.** Секреты — из `.env`: `YOOKASSA_SHOP_ID`, `YOOKASSA_SECRET`. Без ключей в dev режиме `checkout` возвращает `{confirmationUrl: "/parent/subscription?mock=success"}` и webhook можно дёрнуть вручную — флаг `BILLING_MOCK=1`.
@@ -949,5 +952,6 @@ git add -A && git commit -m "feat: e2e happy path, polish pass, README"
 
 ## Самопроверка плана
 
-- **Покрытие спеки:** упражнения ×3 (Tasks 2, 7–9), rule-based адаптивность (3), мотивация/маскот/бейджи (3, 10), подписка+триал+free tier+грейс+fallback-сверка (5, 12, 11), прерванная сессия 1 час (6), детские экраны 6 шт. (10), родительские 3 шт. (11, 12, 4), тесты unit/integration/E2E (везде + 13), дизайн-константы (Global Constraints + 13). Email-рассылок, ИИ, блокировки — нет, как и в спеке.
-- **Типы согласованы:** `ExerciseProps`/`ExerciseResult` (7) используются в 8–10; `checkAccess` (5) в 6; `nextSubscriptionState` (12) в 11 (fallback).
+- **Покрытие спеки:** упражнения ×3 (Tasks 2, 8–10), rule-based адаптивность (3), мотивация/маскот/бейджи (3, 11), подписка+триал+free tier+грейс+fallback-сверка (5, 12, 7), прерванная сессия 1 час (6), детские экраны 6 шт. (11), родительские 3 шт. (7, 12, 4), тесты unit/integration/E2E (везде + 13), дизайн-константы (Global Constraints + 13). Email-рассылок, ИИ, блокировки — нет, как и в спеке.
+- **Типы согласованы:** `ExerciseProps`/`ExerciseResult` (8) используются в 9–11; `checkAccess` (5) в 6; `nextSubscriptionState` (12) в 7 (fallback).
+- **Приоритет (09.08.2026):** Task 7 «Родительский дашборд» поднят с позиции 11 — см. Global Constraints и `recovered-uncommitted/конкурентный-анализ-Kids360.md`, раздел 10, рекомендация 3.
