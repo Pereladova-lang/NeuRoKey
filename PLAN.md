@@ -683,7 +683,7 @@ export type Access = { allowed: boolean; reason: "ok" | "free_tier_limit" | "exp
 export function checkAccess(sub: { status: string; trialEndsAt: Date }, sessionsToday: number, now: Date): Access;
 ```
 
-- [ ] **Step 1: Падающие тесты**
+- [x] **Step 1: Падающие тесты**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -709,7 +709,7 @@ describe("checkAccess", () => {
 });
 ```
 
-- [ ] **Step 2: FAIL → Step 3: Реализовать**
+- [x] **Step 2: FAIL → Step 3: Реализовать**
 
 ```ts
 export type Access = { allowed: boolean; reason: "ok" | "free_tier_limit" | "expired_soft"; exercisesAllowed: 1 | 3 };
@@ -729,7 +729,7 @@ export function checkAccess(
 }
 ```
 
-- [ ] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: subscription access gating (trial/free tier)"`
+- [x] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: subscription access gating (trial/free tier)"`
 
 ---
 
