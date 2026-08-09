@@ -570,7 +570,7 @@ git add -A && git commit -m "feat: rule-based engine (levels, rotation, scores, 
   - `POST /api/child-login` `{childId, pin}` → ставит httpOnly-cookie `nk_child=<childId>` (подписанную HMAC, секрет `AUTH_SECRET`); 401 при неверном PIN.
   - `getChildId(req): string | null` из `src/lib/child-session.ts` — проверка cookie в детских API.
 
-- [ ] **Step 1: Падающий интеграционный тест**
+- [x] **Step 1: Падающий интеграционный тест**
 
 `tests/integration/auth.test.ts` (вызываем route-handlers напрямую как функции):
 
@@ -615,9 +615,9 @@ describe("child login", () => {
 });
 ```
 
-- [ ] **Step 2: Прогнать — FAIL** (роуты не существуют).
+- [x] **Step 2: Прогнать — FAIL** (роуты не существуют).
 
-- [ ] **Step 3: Реализовать**
+- [x] **Step 3: Реализовать**
 
 `src/app/api/register/route.ts`:
 
@@ -656,9 +656,9 @@ export async function POST(req: Request) {
 
 `src/lib/child-session.ts` — подпись `childId` через `crypto.createHmac("sha256", process.env.AUTH_SECRET!)`, cookie `nk_child=<id>.<sig>; HttpOnly; Path=/; Max-Age=2592000`; `getChildId` проверяет подпись и возвращает id либо null. `src/app/api/child-login/route.ts` сверяет PIN (`db.child.findUnique`) и ставит cookie через `NextResponse.json(...).cookies.set(...)`. NextAuth: credentials-провайдер `authorize` сверяет bcrypt-хеш, `jwt`/`session` колбэки кладут `parentId`.
 
-- [ ] **Step 4: Прогнать тесты** → PASS.
+- [x] **Step 4: Прогнать тесты** → PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A && git commit -m "feat: parent auth (NextAuth) and child profile+PIN login"
