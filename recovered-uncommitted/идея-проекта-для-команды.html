@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuRoKey — идея проекта для команды разработки</title>
+<style>
+  :root { --primary:#6366F1; --secondary:#06B6D4; --bg:#F9FAFB; --card:#FFFFFF; --text:#111827; --muted:#6B7280; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:24px; }
+  .wrap { max-width:900px; margin:0 auto; }
+  header { background:linear-gradient(135deg,var(--primary),#7C3AED); color:#fff; border-radius:16px; padding:40px 32px; margin-bottom:24px; }
+  header h1 { font-size:30px; margin-bottom:8px; }
+  header p { opacity:.9; font-size:17px; }
+  .meta { display:flex; gap:16px; margin-top:16px; flex-wrap:wrap; }
+  .meta span { background:rgba(255,255,255,.15); border-radius:999px; padding:4px 14px; font-size:13px; }
+  section { background:var(--card); border-radius:12px; padding:28px 32px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h2 { color:var(--primary); font-size:21px; margin-bottom:14px; border-bottom:2px solid #EEF2FF; padding-bottom:8px; }
+  h3 { font-size:16px; margin:18px 0 8px; color:#374151; }
+  p, li { font-size:15px; }
+  p { margin-bottom:8px; }
+  ul, ol { padding-left:22px; margin:8px 0; }
+  li { margin-bottom:4px; }
+  strong { color:#111827; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; }
+  th { background:#EEF2FF; color:var(--primary); text-align:left; padding:10px 12px; }
+  td { padding:10px 12px; border-bottom:1px solid #F3F4F6; vertical-align:top; }
+  code, pre { font-family:Consolas,monospace; background:#F3F4F6; border-radius:6px; }
+  code { padding:2px 6px; font-size:13px; }
+  pre { padding:14px 16px; overflow-x:auto; font-size:13px; margin:10px 0; white-space:pre-wrap; }
+  blockquote { border-left:4px solid var(--secondary); background:#ECFEFF; padding:14px 18px; border-radius:0 8px 8px 0; margin:14px 0; font-style:italic; color:#0E7490; }
+  .iopo { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:12px 0; }
+  .iopo .card { background:#F9FAFB; border:1px solid #EEF2FF; border-radius:10px; padding:16px; }
+  .iopo .card h4 { color:var(--primary); font-size:14px; margin-bottom:8px; text-transform:uppercase; letter-spacing:.03em; }
+  .iopo .card p { font-size:14px; color:#374151; }
+  .status { display:inline-block; border-radius:6px; padding:2px 10px; font-size:13px; font-weight:600; margin-right:6px; }
+  .status.done { background:#D1FAE5; color:#065F46; }
+  .status.todo { background:#F3F4F6; color:#6B7280; }
+  .verdict-agree { border-left:4px solid #10B981; padding-left:16px; margin:10px 0; }
+  .verdict-clash { border-left:4px solid #F59E0B; padding-left:16px; margin:10px 0; }
+  .verdict-track { background:#EEF2FF; border-radius:10px; padding:16px 18px; margin:10px 0; }
+  .verdict-track h4 { color:var(--primary); font-size:15px; margin-bottom:4px; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:20px 0; }
+  @media (max-width:700px) { .iopo { grid-template-columns:1fr; } }
+  @media print { body { background:#fff; padding:0; } section { box-shadow:none; border:1px solid #eee; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>NeuRoKey — идея проекта</h1>
+  <p>Документ для команды разработки: видение, реальный прогресс пилота и независимая экспертная оценка (LLM Council)</p>
+  <div class="meta">
+    <span>Версия: рабочий черновик</span>
+    <span>Источники: ProjectNeuro.txt · brief.md · PLAN.md · код neurokey-pilot</span>
+  </div>
+</header>
+
+<section>
+  <h2>Коротко: вход → процесс → выход</h2>
+  <div class="iopo">
+    <div class="card">
+      <h4>1. На входе</h4>
+      <p>Ребёнок 7–15 лет открывает высокодофаминовый контент (YouTube, TikTok, игры). Система фиксирует триггер и, в целевом видении, характер полученной цифровой нагрузки — время, приложение, поведенческий паттерн внимания.</p>
+    </div>
+    <div class="card">
+      <h4>2. Процесс</h4>
+      <p>Прежде чем контент откроется — короткая сессия из 3 упражнений. Каждое одновременно закрепляет школьный материал, тренирует конкретную исполнительную функцию мозга и компенсирует именно тот тип нагрузки, который был получен от экрана.</p>
+    </div>
+    <div class="card">
+      <h4>3. На выходе</h4>
+      <p>Ребёнок получает доступ к контенту, пройдя тренировку. Родитель — дашборд прогресса по когнитивным шкалам. Долгосрочно — продольный когнитивный профиль пользователя на всю жизнь.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Идеология одной фразой</h2>
+  <blockquote>«Телефон становится не источником цифровой зависимости, а персональным тренером мозга.»</blockquote>
+  <p>Это <strong>не</strong> приложение родительского контроля. Родительский контроль ограничивает. NeuRoKey — предположительно — компенсирует и развивает, используя само желание получить дофамин как точку входа в обучение.</p>
+</section>
+
+<section>
+  <h2>Трёхслойная архитектура упражнения (ядро идеи)</h2>
+  <p>Каждое задание — не «капча перед видео», а одновременно три слоя:</p>
+  <table>
+    <tr><th>Слой</th><th>Что делает</th><th>Пример (ребёнок 8 лет, ловит рыбок с числами, делящимися на 2)</th></tr>
+    <tr><td><strong>Академический</strong></td><td>Закрепляет школьную программу</td><td>Таблица умножения</td></tr>
+    <tr><td><strong>Нейрокогнитивный</strong></td><td>Тренирует исполнительную функцию</td><td>Избирательное внимание, скорость обработки</td></tr>
+    <tr><td><strong>Компенсаторный</strong></td><td>Нейтрализует эффект экрана</td><td>После 40 мин YouTube — больше движущихся объектов, тренировка переключения внимания</td></tr>
+  </table>
+  <p>Заявленная (целевая, пока не реализованная) сквозная архитектура:</p>
+  <pre>Экранное время → ИИ анализирует нагрузку → определяет перегруженные функции
+→ подбирает компенсирующие упражнения → доступ открывается</pre>
+</section>
+
+<section>
+  <h2>Возрастные и уровневые маршруты (roadmap видения)</h2>
+  <ul>
+    <li><strong>4–6 лет</strong> — «Создание фундамента»: сенсомоторная интеграция, внимание, база письма/счёта.</li>
+    <li><strong>7–10 лет</strong> — «Формирование учебного мозга»: математика, чтение, английский + устойчивое внимание, рабочая память.</li>
+    <li><strong>11–14 лет</strong> — «Исполнительные функции»: алгебра, анализ текста + когнитивная гибкость, планирование. <span class="status done">← текущий пилот здесь</span></li>
+    <li><strong>15–18 лет</strong> — «Подготовка к взрослому мышлению»: экзамены, метапознание, управление цифровыми привычками.</li>
+    <li><strong>Университет</strong> — академическое чтение научных статей, работа с источниками, письмо, статистика, анализ данных.</li>
+    <li><strong>Профессиональные траектории</strong> — медицина, право, программирование, экономика, психология + сквозные метанавыки.</li>
+  </ul>
+  <p>Сквозная идея: одна и та же когнитивная механика (например, тормозный контроль) сопровождает пользователя от «не нажимать на красную кнопку» в 6 лет до «взвешенных решений в профессии» в 35 — меняется контекст, не когнитивная цель.</p>
+</section>
+
+<section>
+  <h2>Что реально сделано в пилоте сейчас</h2>
+  <p>Кодовая база <code>neurokey-pilot/</code> (Next.js 16, React 19, Prisma/SQLite, NextAuth v5, Tailwind v4, Vitest/Playwright), задачи 1–3 из 13 по плану:</p>
+  <ul>
+    <li><span class="status done">Готово</span> Скаффолд проекта + схема БД (Parent, Child, Subscription, Exercise, Session, SessionResult, Achievement, Config)</li>
+    <li><span class="status done">Готово</span> 90 вручную написанных вариантов упражнений: «Комикс-детектив», «Аналитик данных», «Робо-логика» — только для группы 11–14 лет</li>
+    <li><span class="status done">Готово</span> Rule-based движок: подбор типов упражнений, изменение уровня по точности, подсчёт очков по 4 когнитивным шкалам, streak, бейджи</li>
+  </ul>
+  <p><span class="status todo">Не сделано</span> аутентификация родителя/PIN ребёнка, гейтинг подписки, API сессий, экраны упражнений (контент есть, рендеринга нет), детские экраны, родительский дашборд, оплата ЮKassa, E2E-тесты.</p>
+  <p><strong>Важно понимать про масштаб:</strong> движок в коде — <strong>rule-based, не AI</strong>. Никакого анализа поведения на экране, интеграции с YouTube/TikTok, детектирования типа нагрузки, университетских/профессиональных треков — этого нет и не запланировано в ближайших задачах. Пилот проверяет самую безопасную часть видения (геймификация + подбор заданий), а не его рискованное ядро.</p>
+</section>
+
+<section>
+  <h2>Вердикт LLM Council</h2>
+  <p>Видение прогнано через 5 независимых экспертных позиций (Contrarian, First Principles, Expansionist, Outsider, Executor) с анонимным перекрёстным обзором.</p>
+
+  <h3>Согласие совета</h3>
+  <div class="verdict-agree">
+    <p><strong>Компенсаторный слой не реализован и не может быть проверен в пилоте.</strong> Он требует детектора типа нагрузки от экрана, которого нет. Пилот тестирует «дети готовы решать задачи ради доступа к телефону» — это не главная гипотеза продукта.</p>
+  </div>
+  <div class="verdict-agree">
+    <p><strong>Научная база компенсаторного слоя изложена как готовая архитектура, но не доказана.</strong> Связь «TikTok 2 часа → такой-то паттерн нагрузки → компенсируется таким-то упражнением» — гипотеза, а не установленный механизм. Нет ссылок на исследования переноса эффекта, дозы, обратной связи.</p>
+  </div>
+  <div class="verdict-agree">
+    <p><strong>Гейтинг доступа к контенту на устройстве технически не спроектирован.</strong> Это не деталь, это фундамент: без него — просто ещё одно приложение с упражнениями, а не «тренер мозга», управляющий доступом.</p>
+  </div>
+  <div class="verdict-agree">
+    <p><strong>Видение описывает вселенную (4 года → университет → профессии), пилот тестирует один квадратный сантиметр.</strong> Масштаб полезен как north star, но опасен как ТЗ на сейчас — тянет к архитектуре «под масштаб» раньше, чем проверено ядро гипотезы.</p>
+  </div>
+
+  <h3>Расхождение совета</h3>
+  <div class="verdict-clash">
+    <p><strong>Expansionist:</strong> слабая научная валидность сейчас — не блокер, а причина начать собирать продольные когнитивные данные с первого пилота. «Одни и те же механики через всю жизнь» — потенциально уникальный актив, которого нет ни у одного EdTech-конкурента, применимый далеко за пределами детей (взрослый когнитивный фитнес, корпоративное благополучие, клинические применения).</p>
+    <p><strong>Остальные советники:</strong> это преждевременное расширение, отвлекающее от проверки базовой гипотезы.</p>
+  </div>
+
+  <h3>Три отдельных R&amp;D-трека, скрытых за словом «продукт»</h3>
+  <div class="verdict-track">
+    <h4>1. Инженерный — гейтинг доступа на устройстве</h4>
+    <p>iOS Screen Time API и Android Accessibility Service дают стороннему приложению очень ограниченные права; блокировка чужого приложения по требованию может быть отклонена App Store/Google Play review в принципе, независимо от усилий разработки.</p>
+  </div>
+  <div class="verdict-track">
+    <h4>2. Научный — компенсаторная гипотеза</h4>
+    <p>Нужен способ измерить «тип нагрузки от экрана» без айтрекера/ЭЭГ (в лучшем случае — прокси по паттернам кликов/скролла), и доказать, что конкретное упражнение снимает именно этот тип нагрузки за несколько минут.</p>
+  </div>
+  <div class="verdict-track">
+    <h4>3. Продуктовый — rule-based геймификация как MVP</h4>
+    <p>Это то, что пилот реально строит сейчас — самая дешёвая и наименее рискованная часть, полезная сама по себе, но не подтверждающая ключевое УТП продукта.</p>
+  </div>
+
+  <h3>Рекомендация совета</h3>
+  <p>Разделить видение и текущий пилот явно. Зафиксировать видение как north star, <strong>не как техническое ТЗ на ближайший спринт</strong>. Пилот вести как узкую, честную проверку одного вопроса: «работает ли геймифицированный rule-based подбор упражнений с детьми 11–14 лет» — без обещания ИИ-анализа нагрузки, компенсаторного эффекта или гейтинга как факта пользователям и инвесторам, пока это не проверено отдельными экспериментами.</p>
+</section>
+
+<section>
+  <h2>Что это значит для команды на практике</h2>
+  <ul>
+    <li>Не продавайте (внутри команды, инвесторам, в маркетинге) текущий пилот как реализацию полного видения. Пилот = движок ротации + геймификация + контент для одной возрастной группы.</li>
+    <li>Прежде чем расширять контент/возраста/уровни — стоит поставить дешёвый эксперимент именно на двух точках отказа: возможен ли гейтинг технически, и даёт ли адаптация упражнения под тип нагрузки измеримый эффект по сравнению со случайным подбором.</li>
+    <li>Видение (университет, профессии, метанавыки, life-long когнитивный профиль) — ценный ориентир для питчей и долгосрочной архитектуры данных, но не должно определять объём работы ближайших спринтов.</li>
+  </ul>
+</section>
+
+<footer>NeuRoKey · собрано из ProjectNeuro.txt, brief.md, PLAN.md и ревью кода · оценка через LLM Council</footer>
+
+</div>
+</body>
+</html>
