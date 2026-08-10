@@ -818,9 +818,9 @@ export type ExerciseProps<C> = { content: C; onComplete: (r: ExerciseResult) => 
 
 `ComicExercise` рендерит панели (эмодзи-сцена + реплика), для скрытой — 3 кнопки-варианта. Неверный вариант: кнопка мягко подсвечивается серым, показывается подсказка «Перечитай предыдущую реплику 🙂», попытки не ограничены. `accuracy = 1` с первой попытки, `0.6` со второй, `0.3` с третьей+. По верному ответу — `onComplete`.
 
-- [ ] **Step 1: Падающий тест** — рендер с фикстурой из `comics[0]`, клик по неверному варианту → подсказка видна и `onComplete` не вызван; клик по верному → `onComplete` с `accuracy: 0.6`.
-- [ ] **Step 2: FAIL → Step 3: Реализовать** (клиентский компонент, Tailwind; текст ≥18px, кнопки ≥44px высоты, transition 200ms).
-- [ ] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: comic exercise component"`
+- [x] **Step 1: Падающий тест** — рендер с фикстурой из `comics[0]`, клик по неверному варианту → подсказка видна и `onComplete` не вызван; клик по верному → `onComplete` с `accuracy: 0.6`.
+- [x] **Step 2: FAIL → Step 3: Реализовать** (клиентский компонент, Tailwind; текст ≥18px, кнопки ≥44px высоты, transition 200ms).
+- [x] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: comic exercise component"`
 
 ---
 
