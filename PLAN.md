@@ -836,9 +836,9 @@ export type ExerciseProps<C> = { content: C; onComplete: (r: ExerciseResult) => 
 
 Механика: показывается график, затем вопросы по одному (2–3). Каждый вопрос — 3 варианта. `accuracy` = среднее по вопросам (та же шкала попыток, что в Task 7). После последнего вопроса → `onComplete`.
 
-- [ ] **Step 1: Падающий тест** — фикстура с 2 вопросами: верный ответ на оба с первой попытки → `onComplete({accuracy: 1, ...})`; на втором вопросе первый клик неверный → итог `accuracy = (1 + 0.6) / 2 = 0.8`.
-- [ ] **Step 2–4: FAIL → реализация → PASS.**
-- [ ] **Step 5: Commit** — `git commit -m "feat: data analysis exercise with SVG bar chart"`
+- [x] **Step 1: Падающий тест** — фикстура с 2 вопросами: верный ответ на оба с первой попытки → `onComplete({accuracy: 1, ...})`; на втором вопросе первый клик неверный → итог `accuracy = (1 + 0.6) / 2 = 0.8`.
+- [x] **Step 2–4: FAIL → реализация → PASS.**
+- [x] **Step 5: Commit** — `git commit -m "feat: data analysis exercise with SVG bar chart"`
 
 ---
 
