@@ -861,9 +861,9 @@ export function simulate(grid: string[], commands: ("up"|"down"|"left"|"right")[
 
 UI: сетка-поле, панель команд (кнопки-стрелки добавляют команду в очередь, счётчик энергии убывает), кнопка «Запустить» анимирует робота по `path` (CSS-переход 200ms на клетку). Ловушка/стена/нехватка энергии — робот мигает, реплика маскота «Почти! Попробуй другой маршрут», очередь очищается, попытки не ограничены. `accuracy` по числу запусков: 1 / 0.6 / 0.3 (как в Task 7).
 
-- [ ] **Step 1: Падающие тесты `robot-sim`** — грид `["S..","#.#","..F"]`: путь `right,right,down,down` → `finish`; `down` → `trap`; `up` → `wall`; лимит энергии 2 с командами длиннее → `out_of_energy`.
-- [ ] **Step 2–4: FAIL → реализация → PASS** (сначала `robot-sim`, затем компонент).
-- [ ] **Step 5: Commit** — `git commit -m "feat: robot logic exercise with simulator"`
+- [x] **Step 1: Падающие тесты `robot-sim`** — грид `["S..","#.#","..F"]`: путь `right,down,down,right` → `finish` (маршрут `right,right,down,down` из этого пункта плана ведёт в ловушку на этой сетке — уточнено при реализации); `down` → `trap`; `up` → `wall`; лимит энергии 2 с командами длиннее → `out_of_energy`.
+- [x] **Step 2–4: FAIL → реализация → PASS** (сначала `robot-sim`, затем компонент).
+- [x] **Step 5: Commit** — `git commit -m "feat: robot logic exercise with simulator"`
 
 ---
 
