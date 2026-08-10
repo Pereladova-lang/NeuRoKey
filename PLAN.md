@@ -795,9 +795,9 @@ return NextResponse.json({
 
 Дашборд: карточка ребёнка → 4 строки `ScaleBar` (название шкалы по-русски, полоса %, дельта «↑12%» зелёным / «↓» серым — не красным), сессий за неделю, стрик. Блок подписки: статус («Пробный период до 18 июля» / «Активна, следующее списание …»), кнопка «Управление подпиской» → Task 12.
 
-- [ ] **Step 1: Падающий тест** — сид: родитель + ребёнок + 2 завершённые сессии с результатами; `GET /api/parent/stats` с mock-сессией → `sessionsThisWeek === 2`, шкалы > 0; без сессии → 401.
-- [ ] **Step 2–4: FAIL → реализация → PASS.**
-- [ ] **Step 5: Commit** — `git commit -m "feat: parent dashboard with weekly cognitive stats"`
+- [x] **Step 1: Падающий тест** — сид: родитель + ребёнок + 2 завершённые сессии с результатами; `GET /api/parent/stats` с mock-сессией → `sessionsThisWeek === 2`, шкалы > 0; без сессии → 401.
+- [x] **Step 2–4: FAIL → реализация → PASS.**
+- [x] **Step 5: Commit** — `git commit -m "feat: parent dashboard with weekly cognitive stats"`
 
 ---
 
