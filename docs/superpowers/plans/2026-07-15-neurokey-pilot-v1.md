@@ -883,7 +883,52 @@ UI: сетка-поле, панель команд (кнопки-стрелки 
 
 ---
 
-### Task 12: Подписка ЮKassa
+### Task 12: Подписка Robokassa
+
+> **Deviation from the plan as written (2026-08-11, owner decision):** built with
+> Robokassa instead of YooKassa — owner already has a Robokassa merchant account, no new
+> approval needed. Also does **not** use Robokassa's Recurring API (untested in any of the
+> owner's projects); instead it follows the one-time signed-checkout-link pattern already
+> proven live in the owner's NeuroLang project. This changes the shape of everything below
+> — see `src/lib/robokassa.ts` and `src/lib/billing.ts` for what was actually built, and
+> the design spec §5 for the updated behavior. Sections below are left as originally
+> planned for history; they were **not** followed as written.
+
+**Files (as actually built):**
+- Created: `src/lib/robokassa.ts`, `src/lib/billing.ts`, `src/lib/subscription-label.ts`,
+  `src/app/api/billing/checkout/route.ts`, `src/app/api/billing/webhook/route.ts`,
+  `src/app/api/billing/cancel/route.ts`, `src/app/(parent)/parent/subscription/page.tsx`,
+  `src/components/CancelSubscriptionButton.tsx`
+- Modified: `src/lib/parent-stats.ts` (fallback reconciliation), `.env.example`
+- Tests: `tests/unit/robokassa.test.ts`, `tests/unit/billing.test.ts`, `tests/integration/billing-webhook.test.ts`
+
+**What differs from the original plan text:**
+- `src/lib/robokassa.ts` replaces `yookassa.ts` — no payment-creation API call; the
+  checkout URL itself is a Password1-signed redirect (`createCheckoutUrl`), and
+  `verifyResultSignature` checks the Password2-signed webhook. `parentId` rides as
+  `Shp_parentId` (Robokassa echoes custom `Shp_*` params back verbatim) — no separate
+  payments table needed to correlate a webhook back to a subscription.
+- `src/lib/billing.ts` splits into two pure functions instead of one:
+  `nextSubscriptionState(event, now)` for the two real events (`payment_succeeded`,
+  `cancel_requested` — no `payment.canceled` event exists without recurring auto-charge),
+  and `reconcileExpiry(sub, now)` for the time-based decay `active → past_due → expired`
+  that replaces the old `grace_expired` event (nothing tells us a renewal failed, so each
+  parent-portal visit checks whether `nextBillingAt` has quietly passed instead).
+- Env vars: `ROBOKASSA_MERCHANT_LOGIN`, `ROBOKASSA_PASSWORD1`, `ROBOKASSA_PASSWORD2`,
+  `ROBOKASSA_IS_TEST` (matches the naming already used in the owner's NeuroLang project).
+  `BILLING_MOCK=1` still short-circuits `/api/billing/checkout` to
+  `{checkoutUrl: "/parent/subscription?mock=success"}` for dev; the webhook still has to
+  be POSTed manually (curl, hand-signed) to simulate a payment.
+- Subscription page shows status via shared `subscriptionLabel()` (now also used by the
+  dashboard), price, "Оформить" (server action → `checkoutHandler()` → `redirect`), and
+  "Отменить подписку" (client component, `confirm()` dialog) — matches the plan's UI
+  intent even though the wiring underneath changed.
+- Verified manually end-to-end via Playwright + a hand-signed webhook POST in
+  `BILLING_MOCK=1` mode (see commit `feat: Robokassa subscription (checkout, webhook,
+  cancel, grace)`), not via a scripted `tests/e2e` spec.
+
+<details>
+<summary>Original plan text (YooKassa + Recurring API — not what was built)</summary>
 
 **Files:**
 - Create: `src/lib/yookassa.ts`, `src/app/api/billing/checkout/route.ts`, `src/app/api/billing/webhook/route.ts`, `src/app/api/billing/cancel/route.ts`, `src/lib/billing.ts`, `src/app/(parent)/parent/subscription/page.tsx`
@@ -922,6 +967,8 @@ export function nextSubscriptionState(
 - [ ] **Step 5: Страница подписки** — статус, цена 299 ₽/мес, кнопка «Оформить» (→ checkout → redirect), «Отменить подписку» (один клик, confirm-диалог), история: список платежей не храним в v1 — показываем `nextBillingAt`.
 - [ ] **Step 6: Прогнать все тесты** — `npx vitest run` → PASS.
 - [ ] **Step 7: Commit** — `git commit -m "feat: YooKassa subscription (checkout, webhook, cancel, grace)"`
+
+</details>
 
 ---
 
