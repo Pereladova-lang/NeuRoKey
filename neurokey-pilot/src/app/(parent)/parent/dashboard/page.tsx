@@ -1,31 +1,11 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { getParentStats } from "@/lib/parent-stats";
+import { subscriptionLabel } from "@/lib/subscription-label";
 import { ScaleBar } from "@/components/ScaleBar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-function formatDate(d: Date | string) {
-  return new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long" }).format(new Date(d));
-}
-
-function subscriptionLabel(sub: { status: string; trialEndsAt: Date | string; nextBillingAt: Date | string | null }) {
-  switch (sub.status) {
-    case "trial":
-      return `Пробный период до ${formatDate(sub.trialEndsAt)}`;
-    case "active":
-      return sub.nextBillingAt ? `Активна, следующее списание ${formatDate(sub.nextBillingAt)}` : "Активна";
-    case "past_due":
-      return "Проблема с оплатой — доступ сохранён ещё на несколько дней";
-    case "expired":
-      return "Пробный период закончился";
-    case "canceled":
-      return "Подписка отменена";
-    default:
-      return sub.status;
-  }
-}
 
 export default async function ParentDashboardPage() {
   const session = await auth();

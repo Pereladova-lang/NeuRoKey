@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { aggregateWeek } from "@/lib/engine";
+import { reconcileExpiry } from "@/lib/billing";
 
 const WEEK_MS = 7 * 864e5;
 
@@ -16,6 +17,13 @@ export async function getParentStats(parentId: string) {
   if (!parent) return null;
 
   const now = new Date();
+
+  if (parent.subscription) {
+    const change = reconcileExpiry(parent.subscription, now);
+    if (change) {
+      parent.subscription = await db.subscription.update({ where: { parentId }, data: change });
+    }
+  }
   const children = parent.children.map((child) => {
     const results = child.sessions.flatMap((s) => s.results);
     const { current, delta } = aggregateWeek(results, now);
