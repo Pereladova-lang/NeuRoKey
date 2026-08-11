@@ -3,16 +3,11 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { getChildId } from "@/lib/child-session";
 import { nextStreak, earnedBadges, type ExerciseType } from "@/lib/engine";
+import { TYPE_LABELS } from "@/lib/type-labels";
 
 const Body = z.object({
   feedbackEmoji: z.enum(["love", "good", "meh", "bad"]),
 });
-
-const TYPE_LABELS: Record<ExerciseType, string> = {
-  comic: "внимание и память",
-  data: "логику и анализ данных",
-  robot: "планирование и контроль",
-};
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const childId = getChildId(req);
