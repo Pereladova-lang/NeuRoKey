@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { nextLevel, pickSessionTypes, computeScores, nextStreak, earnedBadges } from "@/lib/engine";
+import { nextLevel, pickSessionTypes, computeScores, nextStreak, earnedBadges } from "../src/engine";
 
 describe("nextLevel", () => {
   const hi = { level: 2, accuracy: 0.9 };

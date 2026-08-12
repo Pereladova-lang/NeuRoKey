@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { nextLevel, type ExerciseType } from "@/lib/engine";
+import { nextLevel, type ExerciseType } from "@neurokey/core";
 
 export async function lastFirstExerciseType(childId: string): Promise<ExerciseType | null> {
   const lastFinished = await db.session.findFirst({

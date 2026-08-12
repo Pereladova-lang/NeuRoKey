@@ -1,4 +1,4 @@
-import type { CognitiveScores } from "@/lib/exercise-types";
+import type { CognitiveScores } from "./exercise-types";
 
 export type ExerciseType = "comic" | "data" | "robot";
 
