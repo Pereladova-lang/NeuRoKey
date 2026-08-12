@@ -1,0 +1,11 @@
+{
+  "name": "neurokey-monorepo",
+  "private": true,
+  "workspaces": [
+    "neurokey-pilot",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "jsdom": "^30.0.1"
+  }
+}
