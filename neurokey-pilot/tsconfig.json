@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@neurokey/core": ["../packages/neurokey-core/src/index.ts"]
     }
   },
   "include": [

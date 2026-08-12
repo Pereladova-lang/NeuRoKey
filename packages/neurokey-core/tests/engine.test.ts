@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { nextLevel, pickSessionTypes, computeScores, nextStreak, earnedBadges } from "@/lib/engine";
+import { nextLevel, pickSessionTypes, computeScores, nextStreak, earnedBadges, TYPE_WEIGHTS } from "../src/engine";
 
 describe("nextLevel", () => {
   const hi = { level: 2, accuracy: 0.9 };
@@ -46,5 +46,11 @@ describe("earnedBadges", () => {
     expect(earnedBadges({ totalSessions: 5, streak: 3, maxLevel: 2 })).toEqual(
       expect.arrayContaining(["streak3", "level2"]),
     );
+  });
+});
+
+describe("TYPE_WEIGHTS", () => {
+  it("is exported and covers all exercise types", () => {
+    expect(Object.keys(TYPE_WEIGHTS).sort()).toEqual(["comic", "data", "robot"]);
   });
 });
