@@ -27,6 +27,14 @@ describe("computeBaseline", () => {
     const profile = computeBaseline("child-1", [], new Date("2026-08-10T10:00:00Z"));
     expect(profile.scales).toEqual({});
   });
+
+  it("clamps out-of-range readings to 0-100", () => {
+    const sources: SignalSource[] = [
+      { kind: "in-app-interaction", readings: [{ scaleId: "attention", value: 150 }] },
+    ];
+    const profile = computeBaseline("child-1", sources, new Date("2026-08-10T10:00:00Z"));
+    expect(profile.scales.attention).toBe(100);
+  });
 });
 
 describe("updateProfile", () => {

@@ -6,8 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 NeuRoKey — a neuro-adaptive educational platform concept: before a child gets access to
 high-dopamine content (YouTube, TikTok, games), they complete a short adaptive cognitive-training
-session. The repo root is a **planning/research monorepo** (product docs, specs, TZ); the only
-buildable code lives in `neurokey-pilot/`, a Next.js pilot app for the 11–14 age cohort.
+session. The repo root is a **planning/research monorepo** (product docs, specs, TZ); the buildable
+code lives in `neurokey-pilot/`, a Next.js pilot app for the 11–14 age cohort, and
+`packages/neurokey-core/`, a shared rule-engine/methodology package it consumes via npm workspaces.
 
 Interface language is Russian throughout (UI copy, product docs). Code identifiers, comments, and
 commit messages are English.
@@ -18,7 +19,8 @@ commit messages are English.
 /                                   product docs, research, specs (see below)
 docs/superpowers/specs/             design specs — source of truth for behavior
 docs/superpowers/plans/             TDD implementation plans (task-by-task, checkbox tracked)
-neurokey-pilot/                     the actual Next.js application (only code that runs)
+neurokey-pilot/                     the actual Next.js application
+packages/neurokey-core/             shared rule-engine/methodology package (`@neurokey/core`) — engine, CognitiveProfile, Skill; consumed by `neurokey-pilot` via npm workspaces
 recovered-uncommitted/              drafts recovered after a 2026-08-08 hardware crash; not yet triaged/merged into the docs above — check before treating as current
 ```
 
@@ -46,8 +48,10 @@ npx prisma db seed                              # run prisma/seed.ts (90 hand-au
 npx prisma studio                                # inspect the SQLite DB
 ```
 
-There is no root-level build — always `cd neurokey-pilot` first. `DATABASE_URL` and `AUTH_SECRET`
-must be set (see `.env.example`); DB is SQLite (`file:./dev.db`).
+The repo root has a `package.json` with npm workspaces (`neurokey-pilot`, `packages/*`), so
+`npm install` from repo root manages both packages — but there is no root-level dev/build/test
+script; always `cd neurokey-pilot` or `cd packages/neurokey-core` first to run anything.
+`DATABASE_URL` and `AUTH_SECRET` must be set (see `.env.example`); DB is SQLite (`file:./dev.db`).
 
 ## Architecture (neurokey-pilot)
 
@@ -55,12 +59,14 @@ Monolith Next.js App Router: UI + API routes in one app, SQLite via Prisma. Core
 kept as **pure, unit-tested functions in `src/lib/`**, separate from UI/API, so behavior can be
 tested without a database or network:
 
-- `src/lib/engine.ts` — the whole adaptive rule engine: `nextLevel` (level up/down from recent
-  accuracy), `pickSessionTypes` (rotates the 3 exercise types, avoids repeating the previous
-  session's first type), `computeScores` (per-exercise cognitive score contribution),
-  `nextStreak` (daily streak logic), `earnedBadges`, `aggregateWeek` (week-over-week score deltas
-  for the parent dashboard). This file is the one to read first to understand the product.
-- `src/lib/exercise-types.ts` — shared types (`CognitiveScores`, etc.)
+- `packages/neurokey-core/src/engine.ts` — the whole adaptive rule engine: `nextLevel` (level
+  up/down from recent accuracy), `pickSessionTypes` (rotates the 3 exercise types, avoids
+  repeating the previous session's first type), `computeScores` (per-exercise cognitive score
+  contribution), `nextStreak` (daily streak logic), `earnedBadges`, `aggregateWeek` (week-over-week
+  score deltas for the parent dashboard). This file is the one to read first to understand the
+  product; `packages/neurokey-core/src/index.ts` is the package's public API surface.
+- `src/lib/exercise-types.ts` — the pilot's content-shape types (`ComicContent`, `DataContent`,
+  `RobotContent`); `CognitiveScores` now lives in `@neurokey/core`
 - `src/lib/db.ts` — Prisma client singleton
 - `src/content/{comics,dataTasks,robotTasks}.ts` — the 90 hand-authored exercise variants (content,
   not code logic); validated by `tests/unit/seed-content.test.ts`
@@ -81,7 +87,7 @@ key-value table for tunable values (e.g. `trialDays`).
   below 50% accuracy; rise after 3 consecutive sessions at ≥80% on the current level).
 - **Cognitive scales** (0–100, computed weekly in `aggregateWeek`): `attention`, `memory`,
   `logic`, `control`. Each exercise type has fixed weights across these 4 scales
-  (`TYPE_WEIGHTS` in `engine.ts`).
+  (`TYPE_WEIGHTS` in `packages/neurokey-core/src/engine.ts`).
 - **Age cohorts**: pilot code only implements 11–14. The 7–10 and 15–18 spec
   (`2026-08-03-age-cohort-mechanics-design.md`) adds `Exercise.ageCohort` and a pure
   `ageCohortFor(age)` classifier, computed on read rather than stored on `Child` — not yet in

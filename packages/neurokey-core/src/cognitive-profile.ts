@@ -44,7 +44,8 @@ function averageReadings(sources: SignalSource[]): Record<ScaleId, number> {
   }
   const result: Record<ScaleId, number> = {};
   for (const [scaleId, sum] of sums) {
-    result[scaleId] = Math.round(sum / (counts.get(scaleId) ?? 1));
+    const average = Math.round(sum / (counts.get(scaleId) ?? 1));
+    result[scaleId] = Math.min(100, Math.max(0, average));
   }
   return result;
 }

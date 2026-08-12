@@ -7,6 +7,7 @@ export {
   nextStreak,
   earnedBadges,
   aggregateWeek,
+  TYPE_WEIGHTS,
 } from "./engine";
 export type {
   ScaleId,

@@ -2,7 +2,7 @@ import type { CognitiveScores } from "./exercise-types";
 
 export type ExerciseType = "comic" | "data" | "robot";
 
-const TYPE_WEIGHTS: Record<ExerciseType, CognitiveScores> = {
+export const TYPE_WEIGHTS: Record<ExerciseType, CognitiveScores> = {
   comic: { attention: 1, memory: 2, logic: 3, control: 1 },
   data: { attention: 2, memory: 1, logic: 3, control: 2 },
   robot: { attention: 2, memory: 2, logic: 2, control: 3 },

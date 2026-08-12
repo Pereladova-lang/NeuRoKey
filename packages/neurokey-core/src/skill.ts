@@ -5,7 +5,7 @@ export interface Contributor {
   name: string;
   qualification: string;
   role: "methodologist" | "consultant" | "technical-partner" | "investor-partner";
-  sharePercent: number;
+  sharePercent: number; // accounting field for payout calculation only — legal rights arise from a separate contract, not from this value
 }
 
 export interface Reference {
