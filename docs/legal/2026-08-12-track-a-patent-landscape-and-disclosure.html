@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuRoKey — Трек A: патентный ландшафт и invention disclosure</title>
+<style>
+  :root { --primary:#6366F1; --secondary:#06B6D4; --bg:#F9FAFB; --card:#FFFFFF; --text:#111827; --muted:#6B7280; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:24px; }
+  .wrap { max-width:1000px; margin:0 auto; }
+  header { background:linear-gradient(135deg,var(--primary),#7C3AED); color:#fff; border-radius:16px; padding:40px 32px; margin-bottom:24px; }
+  header h1 { font-size:26px; margin-bottom:8px; }
+  header p { opacity:.9; font-size:16px; }
+  .meta { display:flex; gap:16px; margin-top:16px; flex-wrap:wrap; }
+  .meta span { background:rgba(255,255,255,.15); border-radius:999px; padding:4px 14px; font-size:13px; }
+  section { background:var(--card); border-radius:12px; padding:28px 32px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  h2 { color:var(--primary); font-size:20px; margin-bottom:14px; border-bottom:2px solid #EEF2FF; padding-bottom:8px; }
+  h3 { font-size:16px; margin:18px 0 8px; color:#374151; }
+  p, li { font-size:15px; }
+  p { margin-bottom:8px; }
+  ul, ol { padding-left:22px; margin:8px 0; }
+  li { margin-bottom:5px; }
+  strong { color:#111827; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px; }
+  th { background:#EEF2FF; color:var(--primary); text-align:left; padding:10px 12px; }
+  td { padding:10px 12px; border-bottom:1px solid #F3F4F6; vertical-align:top; }
+  code { font-family:Consolas,monospace; background:#F3F4F6; border-radius:6px; padding:2px 6px; font-size:13px; }
+  blockquote { border-left:4px solid var(--secondary); background:#ECFEFF; padding:14px 18px; border-radius:0 8px 8px 0; margin:14px 0; font-style:italic; color:#0E7490; }
+  .badge { display:inline-block; border-radius:999px; padding:2px 12px; font-size:12px; font-weight:600; margin-left:6px; vertical-align:middle; }
+  .badge.high { background:#FEE2E2; color:#991B1B; }
+  .badge.mid { background:#FEF3C7; color:#92400E; }
+  .badge.low { background:#D1FAE5; color:#065F46; }
+  .disclaimer { background:#FFF7ED; border-left:4px solid #F59E0B; border-radius:0 10px 10px 0; padding:16px 20px; margin:10px 0; }
+  .disclaimer p { color:#92400E; }
+  a { color:var(--primary); }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:20px 0; }
+  @media (max-width:700px) { table { font-size:12px; } table, thead, tbody, th, td, tr { display:block; } th { position:sticky; top:0; } }
+  @media print { body { background:#fff; padding:0; } section { box-shadow:none; border:1px solid #eee; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Трек A — патентный ландшафт, оценка патентоспособности, invention disclosure</h1>
+  <p>Рабочий материал для передачи патентному поверенному — не является юридическим заключением</p>
+  <div class="meta">
+    <span>Дата: 12 августа 2026</span>
+    <span>Статус: черновик</span>
+    <span>Готовил: Claude (research assistant)</span>
+  </div>
+</header>
+
+<section>
+  <h2>Дисклеймер</h2>
+  <div class="disclaimer">
+    <p>Этот документ — рабочий материал для подготовки к разговору с патентным поверенным, <strong>не патентный поиск в юридическом смысле</strong> и не заключение о патентоспособности. Веб-поиск покрывает публично индексируемые источники (Google Patents, открытые статьи), не заменяет платный поиск по базам Роспатента (ФИПС) и PCT (WIPO PatentScope) силами специалиста.</p>
+  </div>
+  <p>Перед подачей любой заявки — обязательна проверка регистрированным патентным поверенным (в РФ — аттестован Роспатентом), включая:</p>
+  <ul>
+    <li>полный поиск по классам МПК (G09B — обучение; G06F — обработка данных; A61B — если возникнут физиологические измерения) в русскоязычной и англоязычной базах;</li>
+    <li>проверку формулировок на предмет медицинских claims (см. терминологическое ограничение из спека когнитивного профиля — критично для избежания требований о регистрации как медизделие);</li>
+    <li>решение по стратегии (способ vs. полезная модель vs. только ноу-хау/копирайт на код).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>1. Что патентуется — 6 элементов идеи</h2>
+  <p>По итогам уточнения с продукт-оунером, объекты защиты:</p>
+  <ol>
+    <li><strong>Механика гейтинга через нейросессию</strong> — доступ к высокодофаминовому контенту открывается только после прохождения короткой адаптивной нейрокогнитивной сессии.</li>
+    <li><strong>Алгоритм компенсаторной адаптации</strong> — по паттерну предшествующего экранного поведения определяется вероятный тип когнитивной нагрузки → подбирается упражнение, целенаправленно компенсирующее именно этот тип нагрузки.</li>
+    <li><strong>Трёхслойная структура упражнения</strong> — одно упражнение одновременно решает академическую, нейрокогнитивную и компенсаторную задачи (не три отдельных упражнения).</li>
+    <li><strong>Возрастная траектория навыков (4–18+)</strong> — один и тот же когнитивный механизм (напр. тормозный контроль, рабочая память) сопровождает пользователя через все возрастные этапы, меняется только контекст/сложность.</li>
+    <li><strong>Формат <code>Skill</code></strong> — авторская методика компенсации, формализованная как версионируемая структура данных с полями <code>trigger</code>, <code>targetScales</code>, <code>exerciseParams</code>, <code>authorship</code>, <code>citations</code> — спроектирована и как основа будущей процедурной генерации, и как история приоритета для патентной заявки.</li>
+    <li><strong><code>CognitiveProfile</code> / <code>AssessmentEngine</code></strong> — построение цифрового когнитивного профиля из расширяемого набора <code>SignalSource</code> (внутриигровое взаимодействие → экранное время устройства → визуальный канал), с baseline-диагностикой и периодической переоценкой.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>2. Патентный ландшафт (прайор-арт из открытого веб-поиска)</h2>
+
+  <h3>2.1 Гейтинг доступа через выполнение задания — близкий прайор-арт</h3>
+  <table>
+    <tr><th>Источник</th><th>Суть</th><th>Релевантность</th></tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/US20150007307A1/en" target="_blank">US20150007307A1</a><br>Task Completion Based Access to Mobile Device Operating Systems</td>
+      <td>Удалённая блокировка/разблокировка функций устройства по условию — выполнению задания. Заявка <em>abandoned</em>.</td>
+      <td><span class="badge high">Высокая</span> — почти буквально описывает "заверши задание → получи доступ". Ключевой аналог для разбора поверенным.</td>
+    </tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/US20130091453A1/en" target="_blank">US20130091453A1</a><br>Motivation of Task Completion and Personalization</td>
+      <td>Мотивационная система выполнения задач с персонализацией.</td>
+      <td><span class="badge mid">Средняя</span> — общий принцип "task → reward", не специфично про экран/когнитивную нагрузку.</td>
+    </tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/US9378456B2/en" target="_blank">US9378456B2</a><br>Task completion</td>
+      <td>Механика завершения задач как таковая.</td>
+      <td><span class="badge mid">Средняя</span> — широкая формулировка, риск отклонения по охвату более ранними claims.</td>
+    </tr>
+    <tr>
+      <td>Fitlock, Pushscroll, Steppin, TouchGrass (коммерческие приложения)</td>
+      <td>"Заработай экранное время через физическую активность" — публично не найдено патентов.</td>
+      <td><span class="badge mid">Средняя как рыночный риск</span> — конкурентно близко, патентно не блокирует; отличие NeuroKey должно быть в когнитивной/адаптивной природе задания, не в самом факте гейтинга.</td>
+    </tr>
+  </table>
+
+  <h3>2.2 Адаптивные когнитивные тренировки / cognitive load</h3>
+  <table>
+    <tr><th>Источник</th><th>Суть</th><th>Релевантность</th></tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/WO2014107795A1/en" target="_blank">WO2014107795A1</a><br>Adaptive brain training computer system and method</td>
+      <td>Адаптивная система тренировки мозга.</td>
+      <td><span class="badge high">Высокая</span> — прямой конкурент по формулировке, нужна сверка claims.</td>
+    </tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/US20170046971A1/en" target="_blank">US20170046971A1</a><br>Cognitive training system and method</td>
+      <td>Компьютерно-реализуемый метод когнитивной тренировки.</td>
+      <td><span class="badge high">Высокая</span> — широкая формулировка, требует проверки объёма claims.</td>
+    </tr>
+    <tr>
+      <td><a href="https://google.com/patents/EP1301117B1" target="_blank">EP1301117B1</a><br>Method for training cognitive ability</td>
+      <td>Кастомизация тестирования/тренировки под уровень пользователя по анализу когнитивных компонентов.</td>
+      <td><span class="badge high">Высокая</span> — почти "адаптивный движок" уровня <code>engine.ts</code>/<code>nextLevel</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/US20070134632" target="_blank">US20070134632A1</a><br>Assessment in cognitive training exercises</td>
+      <td>Оценка в рамках когнитивных тренировочных упражнений.</td>
+      <td><span class="badge mid">Средняя-высокая</span> — пересекается с <code>CognitiveProfile</code>/<code>AssessmentEngine</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://patents.google.com/patent/US9737255B2/en" target="_blank">US9737255B2</a>, <a href="https://patents.google.com/patent/US20120282577" target="_blank">US20120282577A1</a>, <a href="https://patents.google.com/patent/US11083398B2/fr" target="_blank">US11083398B2</a> — измерение нагрузки</td>
+      <td>Измерение когнитивной/ментальной нагрузки по письму, физиологическим сигналам, ML-классификации.</td>
+      <td><span class="badge low">Низкая-средняя</span> — измеряют нагрузку напрямую, не выводят её из типа потреблённого контента, как в NeuroKey. Стоит подчеркнуть это отличие в заявке.</td>
+    </tr>
+    <tr>
+      <td><a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/9507481" target="_blank">US9507481</a>, <a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10027606" target="_blank">US10027606</a></td>
+      <td>Определение когнитивной нагрузки для решения, показывать ли уведомление.</td>
+      <td><span class="badge low">Низкая</span> — другая область применения.</td>
+    </tr>
+  </table>
+  <blockquote>Вывод по 2.2: ни один найденный патент не связывает конкретно тип предшествующего цифрового контента (TikTok vs. YouTube Shorts vs. игры vs. чтение) с конкретным типом компенсирующего когнитивного упражнения через явную таблицу соответствий. Это похоже на самое узкое и наиболее защитимое ядро — но узкая формулировка снижает коммерческую ширину патента (легко обойти, изменив таблицу соответствий).</blockquote>
+
+  <h3>2.3 Адаптивное образование в целом (Knewton и аналоги)</h3>
+  <p>Knewton и подобные EdTech-платформы строят индивидуализированные траектории обучения по накопленной истории ответов — прямой аналог "академического слоя" и уровневой системы (<code>nextLevel</code>), но <strong>не покрывает</strong> компенсаторный/нейрокогнитивный слой и трёхслойную одновременность. Отдельно найден <a href="https://patents.google.com/patent/CN117478730A/en" target="_blank">CN117478730A</a> — китайская заявка на адаптивную систему обучения на основе deep learning; нужна отдельная проверка объёма claims поверенным.</p>
+
+  <h3>2.4 Трёхслойная структура задания и возрастная траектория (4–18+)</h3>
+  <p>Прямого прайор-арта под эту конкретную формулировку в открытом поиске не найдено. Ожидаемо: узкоспециализированная методологическая конструкция (не техническое устройство) с высоким шансом квалификации как <strong>"способ" в терминах методики обучения</strong>, а не как патентуемое техническое решение — см. риски в разделе 3.</p>
+</section>
+
+<section>
+  <h2>3. Оценка патентоспособности и риски отказа</h2>
+
+  <h3>3.1 Общий барьер: РФ — статья 1350 ГК РФ, п.5</h3>
+  <p>В России <strong>программы для ЭВМ, алгоритмы и методы "как таковые" исключены из патентоспособных объектов</strong> (ст. 1350 ГК РФ, п.5). Патент на изобретение ("способ") возможен, только если решение представлено как <strong>технический</strong> способ (последовательность действий над материальным объектом техническими средствами), а не как чисто ментальная/педагогическая процедура, и даёт <strong>технический результат</strong>.</p>
+  <p>Прецедент: патент №2634635 на "способ развития эмоционального интеллекта у детей" <strong>выдан как изобретение</strong> — образовательные методики патентуются в РФ, если сформулированы через конкретные технические/аппаратные шаги, а не как чисто содержательная педагогика.</p>
+  <blockquote>Практический вывод: формулировка заявки должна опираться на вычислительно-техническую часть (обработка сигналов взаимодействия с устройством → вычисление профиля → выбор из закодированного набора параметров упражнения по алгоритму), а не на педагогическое содержание задания. Это совпадает с архитектурой из спека <code>Skill</code>/<code>CognitiveProfile</code>, где методика уже отделена как структура данных и алгоритм от контента.</blockquote>
+
+  <h3>3.2 Риски по каждому элементу</h3>
+  <table>
+    <tr><th>Элемент</th><th>РФ</th><th>PCT/US</th><th>Риск отказа</th><th>Комментарий</th></tr>
+    <tr>
+      <td>Гейтинг через нейросессию</td>
+      <td>Средняя</td>
+      <td>Средний-низкий</td>
+      <td><span class="badge high">Высокий</span></td>
+      <td>Самый конкурентный по прайор-арту пункт. Отдельно вероятно не устоит — комбинировать с алгоритмом адаптации для более узких и технических claims.</td>
+    </tr>
+    <tr>
+      <td>Алгоритм компенсаторной адаптации</td>
+      <td>Средняя-высокая</td>
+      <td>Средняя</td>
+      <td><span class="badge mid">Средний</span></td>
+      <td>Самый перспективный кандидат для узкого, но защитимого claim.</td>
+    </tr>
+    <tr>
+      <td>Трёхслойная структура задания</td>
+      <td>Низкая</td>
+      <td>Низкая</td>
+      <td><span class="badge high">Очень высокий</span></td>
+      <td>Вероятно не патентуется отдельно — защищать ноу-хау + копирайтом на конкретные задания.</td>
+    </tr>
+    <tr>
+      <td>Возрастная траектория навыков (4–18+)</td>
+      <td>Низкая</td>
+      <td>Низкая</td>
+      <td><span class="badge high">Очень высокий</span></td>
+      <td>Не техническое решение — защита через ноу-хау/коммерческую тайну + товарный знак на методику.</td>
+    </tr>
+    <tr>
+      <td>Формат <code>Skill</code> (структура данных)</td>
+      <td>Низкая (сама схема)</td>
+      <td>Низкая (сама схема)</td>
+      <td><span class="badge high">Высокий</span> для схемы, <span class="badge mid">средний</span> для процесса</td>
+      <td>Ценность не в патенте, а в задокументированной истории версий как доказательстве приоритета/авторства.</td>
+    </tr>
+    <tr>
+      <td><code>CognitiveProfile</code>/<code>AssessmentEngine</code></td>
+      <td>Средняя</td>
+      <td>Средняя-низкая</td>
+      <td><span class="badge mid">Средний-высокий</span></td>
+      <td>Вероятно не самостоятельный патент, но усиливает claim по алгоритму как часть единого технического способа.</td>
+    </tr>
+  </table>
+
+  <h3>3.3 Итоговая рекомендация по объёму заявки</h3>
+  <p><em>(для обсуждения с поверенным, не финальное решение)</em></p>
+  <p>Наиболее реалистичная стратегия по открытым данным: <strong>одна широкая заявка на "способ"</strong>, объединяющая элементы 1+2+6 (гейтинг + алгоритм компенсаторной адаптации + построение профиля из сигналов) как единый технический процесс, а не как отдельные патенты на каждый элемент. Элементы 3, 4, 5 — защищать не патентом, а комбинацией: копирайт на код и контент, коммерческая тайна на конкретные пороги/веса (<code>TYPE_WEIGHTS</code>, пороги <code>Skill.trigger</code>), товарный знак на название методики.</p>
+</section>
+
+<section>
+  <h2>4. Черновик invention disclosure</h2>
+  <blockquote>Формат ниже — стандартная структура invention disclosure form, которую патентные поверенные используют как отправную точку. Не заявка, а входной материал для неё.</blockquote>
+
+  <p><strong>Название (рабочее):</strong> Способ адаптивного гейтинга доступа к цифровому контенту через нейрокогнитивную компенсаторную сессию</p>
+
+  <p><strong>Изобретатели / вклад:</strong> заполняется по факту — соответствует полю <code>Contributor</code> из формата <code>Skill</code> (имя, квалификация, роль). Юридическая фиксация долей — отдельный договор, не часть этой формы.</p>
+
+  <p><strong>Дата первой формулировки идеи:</strong> нужно зафиксировать точную дату — важно для приоритета; можно опереться на git-историю профильных спеков и <code>ProjectNeuro.txt</code>, но лучше независимая фиксация (нотариальное свидетельствование или депонирование в Роспатенте).</p>
+
+  <h3>Проблема, которую решает изобретение</h3>
+  <p>Существующие приложения родительского/самостоятельного контроля экранного времени (Kids360, Alli360, Forest, Opal, Fitlock, Pushscroll, TouchGrass и др.) гейтируют доступ к контенту через либо (а) простое ограничение по времени, либо (б) физическую активность, не связанную с типом полученной цифровой нагрузки. Ни один из найденных аналогов не подбирает разблокирующее задание на основе типа уже потреблённого контента так, чтобы задание целенаправленно компенсировало вероятный когнитивный эффект именно этого типа контента.</p>
+
+  <h3>Суть технического решения (по шагам)</h3>
+  <ol>
+    <li>Система регистрирует сигналы о взаимодействии пользователя с устройством/приложением (<code>SignalSource</code>: тип и длительность потреблённого контента, паттерн внутриигрового взаимодействия).</li>
+    <li>По зарегистрированным сигналам вычисляется вероятный тип когнитивной нагрузки — сопоставление с предопределённым или обучаемым набором признаков.</li>
+    <li>На основе вычисленного типа нагрузки система выбирает — по таблице соответствия (<code>Skill.trigger</code> → <code>targetScales</code> → <code>exerciseParams</code>) — параметры компенсирующего упражнения.</li>
+    <li>Упражнение подбирается по вычисленным параметрам и представляется как условие доступа: доступ к запрошенному контенту блокируется вычислительно до успешного завершения сессии.</li>
+    <li>Результат сессии обновляет цифровой когнитивный профиль пользователя (<code>CognitiveProfile.scales</code>), используемый для калибровки будущих сессий.</li>
+    <li>(опционально, отдельный claim) Каждое правило соответствия хранится как версионируемая структура данных с указанием авторства и источников — отслеживает и приоритет метода, и происхождение экспертного правила.</li>
+  </ol>
+
+  <h3>Технический эффект</h3>
+  <p><em>(сформулировать вместе с поверенным)</em> Кандидат: "снижение вычислительной/пользовательской неэффективности типового гейтинга за счёт вычислительно управляемого подбора условия разблокировки, зависящего от предшествующего состояния взаимодействия пользователя с устройством" — нужно <strong>избегать</strong> формулировок эффекта в терминах "улучшение здоровья/когнитивных функций", это уводит в медицинские claims.</p>
+
+  <h3>Отличия от найденного прайор-арта</h3>
+  <ul>
+    <li>US20150007307A1 и аналоги — гейтинг по факту выполнения задания, без связи типа задания с типом предшествующей нагрузки.</li>
+    <li>WO2014107795A1, US20170046971A1, EP1301117B1 — адаптивная когнитивная тренировка по результатам самой тренировки, без входного сигнала о внешнем цифровом поведении.</li>
+    <li>Коммерческие "earn screen time" приложения — гейтинг через физическую активность, не через когнитивно-адаптивное задание, привязанное к типу контента.</li>
+  </ul>
+
+  <h3>Известные ограничения / слабые места заявки</h3>
+  <ul>
+    <li>Компенсаторная гипотеза (что конкретный тип упражнения действительно компенсирует конкретный тип нагрузки) на момент написания <strong>не подтверждена собственными данными</strong> (см. "Три отдельных трека R&amp;D", пункт "Научный"). Не блокирует патентную заявку, но стоит обсудить с поверенным риск для будущих claims об эффективности в маркетинге.</li>
+    <li>Механизм вычислительной блокировки на устройстве (App Store/Google Play review, iOS Screen Time API, Android Accessibility Service) — отдельный нерешённый инженерный риск; заявка может описывать способ безотносительно к конкретному OS-API.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Открытые вопросы для патентного поверенного</h2>
+  <ol>
+    <li>Подтвердить финальный объём заявки (раздел 3.3) — одна широкая заявка vs. несколько узких.</li>
+    <li>Проверить формулировки на медицинские claims.</li>
+    <li>Оценить целесообразность подачи полезной модели как промежуточного шага до полноценного изобретения.</li>
+    <li>Решить последовательность: РФ первой (приоритетная дата) → PCT в течение 12 месяцев, либо сразу PCT.</li>
+    <li>Оценить бюджет и обязательный полный поиск по базам ФИПС/WIPO PatentScope силами поверенного.</li>
+    <li>Уточнить формат фиксации даты и содержания идеи как доказательства приоритета/авторства.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>6. Источники</h2>
+  <ul>
+    <li><a href="https://patents.google.com/patent/US20150007307A1/en" target="_blank">US20150007307A1</a> — Task Completion Based Access to Mobile Device Operating Systems</li>
+    <li><a href="https://patents.google.com/patent/US20130091453A1/en" target="_blank">US20130091453A1</a> — Motivation of Task Completion and Personalization of Tasks and Lists</li>
+    <li><a href="https://patents.google.com/patent/US9378456B2/en" target="_blank">US9378456B2</a> — Task completion</li>
+    <li><a href="https://patents.google.com/patent/WO2014107795A1/en" target="_blank">WO2014107795A1</a> — Adaptive brain training computer system and method</li>
+    <li><a href="https://patents.google.com/patent/US20170046971A1/en" target="_blank">US20170046971A1</a> — Cognitive training system and method</li>
+    <li><a href="https://google.com/patents/EP1301117B1" target="_blank">EP1301117B1</a> — Method for training cognitive ability</li>
+    <li><a href="https://patents.google.com/patent/US20070134632" target="_blank">US20070134632A1</a> — Assessment in cognitive training exercises</li>
+    <li><a href="https://patents.google.com/patent/US9737255B2/en" target="_blank">US9737255B2</a> — Measuring cognitive load</li>
+    <li><a href="https://patents.google.com/patent/US20120282577" target="_blank">US20120282577A1</a> — Measuring cognitive load</li>
+    <li><a href="https://patents.google.com/patent/US11083398B2/fr" target="_blank">US11083398B2</a> — Methods and systems for determining mental load</li>
+    <li><a href="https://patents.google.com/patent/CN117478730A/en" target="_blank">CN117478730A</a> — Adaptive learning system and method based on deep learning principles</li>
+    <li><a href="https://patentpatentpatent.ru/01-kak-poluchit-patent-na-programmnoe-obespechenie" target="_blank">Патентование ПО в РФ, ст. 1350 ГК РФ п.5</a></li>
+    <li><a href="https://1-tm.ru/blog/patentovanie-algoritmov-kompyuternyh-programm" target="_blank">Патентование алгоритмов компьютерных программ</a></li>
+    <li><a href="https://ezybrand.ru/blog/kak-zashhitit-obrazovatelnuyu-metodiku-ili-sposob-obucheniya/" target="_blank">Как защитить образовательную методику (патент №2634635 как прецедент)</a></li>
+    <li><a href="https://www.bashukchichkanov.com/press/patent-na-sposob-v-rossii-kak-oformit-i-chto-vazhno-uchest-pri-patentovanii-tekhnologii/" target="_blank">Патент на способ в России</a></li>
+  </ul>
+</section>
+
+<footer>NeuRoKey — внутренний рабочий документ, трек A</footer>
+
+</div>
+</body>
+</html>
