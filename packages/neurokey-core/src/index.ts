@@ -17,3 +17,13 @@ export type {
   SignalSource,
 } from "./cognitive-profile";
 export { computeBaseline, updateProfile, scaleTrend } from "./cognitive-profile";
+export type {
+  Contributor,
+  Reference,
+  SkillTriggerSignalType,
+  SkillTrigger,
+  SkillExerciseParams,
+  Skill,
+  TriggerContext,
+} from "./skill";
+export { matchesTrigger, selectSkill, nextSkillVersion, reviseSkill } from "./skill";
