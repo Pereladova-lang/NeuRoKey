@@ -1,5 +1,10 @@
 # NeuRoKey Пилот v1 — Implementation Plan
 
+> **Status (2026-08-12): все 13 задач выполнены и запушены в `main`.** Подписка
+> реализована на Robokassa (не ЮKassa/YooKassa из исходного плана — см. пометку
+> в Task 12); остальное соответствует плану как есть, включая E2E-тест
+> (Task 13, коммиты `30d0d45`, `fe42eb5`).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Веб-тренажёр NeuRoKey для детей 11–14 лет: 3 трёхслойных упражнения, rule-based адаптивность, детский + родительский интерфейсы, подписка ЮKassa с 3-дневным триалом.
@@ -32,7 +37,7 @@
 **Interfaces:**
 - Produces: Prisma Client с моделями `Parent, Child, Subscription, Exercise, Session, SessionResult, Achievement, Config`; хелпер `db` из `src/lib/db.ts`.
 
-- [ ] **Step 1: Инициализировать проект**
+- [x] **Step 1: Инициализировать проект**
 
 ```bash
 npx create-next-app@latest neurokey-pilot --typescript --tailwind --app --src-dir --no-eslint --use-npm
@@ -45,7 +50,7 @@ npx shadcn@latest add button card progress badge input dialog
 
 Проект создаётся в подпапке `neurokey-pilot/` внутри репозитория NeuRoKey.
 
-- [ ] **Step 2: Написать схему Prisma**
+- [x] **Step 2: Написать схему Prisma**
 
 `prisma/schema.prisma`:
 
@@ -138,7 +143,7 @@ model Config {
 }
 ```
 
-- [ ] **Step 3: Создать `src/lib/db.ts`**
+- [x] **Step 3: Создать `src/lib/db.ts`**
 
 ```ts
 import { PrismaClient } from "@prisma/client";
@@ -148,7 +153,7 @@ export const db = globalForPrisma.prisma ?? new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
 ```
 
-- [ ] **Step 4: Написать падающий тест схемы**
+- [x] **Step 4: Написать падающий тест схемы**
 
 `tests/unit/schema.test.ts`:
 
@@ -187,7 +192,7 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 5: Прогнать миграцию и тест**
+- [x] **Step 5: Прогнать миграцию и тест**
 
 ```bash
 npx prisma migrate dev --name init
@@ -196,7 +201,7 @@ npx vitest run tests/unit/schema.test.ts
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -A && git commit -m "feat: scaffold Next.js app with Prisma schema"
@@ -239,7 +244,7 @@ export type RobotContent = {
 };
 ```
 
-- [ ] **Step 1: Написать падающий тест на объём и валидность сидов**
+- [x] **Step 1: Написать падающий тест на объём и валидность сидов**
 
 `tests/unit/seed-content.test.ts`:
 
@@ -273,7 +278,7 @@ describe("seed content", () => {
 });
 ```
 
-- [ ] **Step 2: Написать контент**
+- [x] **Step 2: Написать контент**
 
 Каждый файл экспортирует `{ level: 1|2|3; content: <Type>Content }[]` — по 30 записей. Контент рукописный, на русском, возраст 11–14. Уровень отличается: комикс — длина и тонкость логической связи; данные — сложность графика и вопросы-ловушки («нельзя заключить»); робот — размер поля (5×5 / 6×6 / 7×7), число ловушек и запас энергии. Изображения панелей комикса — эмодзи-сцены в тексте (`image: "🏫🌧️"`), без файлов картинок в v1.
 
@@ -306,7 +311,7 @@ export const comics: { level: 1 | 2 | 3; content: ComicContent }[] = [
 ];
 ```
 
-- [ ] **Step 3: Написать `prisma/seed.ts`**
+- [x] **Step 3: Написать `prisma/seed.ts`**
 
 ```ts
 import { PrismaClient } from "@prisma/client";
@@ -336,14 +341,14 @@ main().finally(() => db.$disconnect());
 
 В `package.json`: `"prisma": { "seed": "npx tsx prisma/seed.ts" }` (добавить dev-зависимость `tsx`).
 
-- [ ] **Step 4: Прогнать тесты и сид**
+- [x] **Step 4: Прогнать тесты и сид**
 
 ```bash
 npx vitest run tests/unit/seed-content.test.ts   # PASS
 npx prisma db seed                               # Seeded 90 exercises
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A && git commit -m "feat: add 90 hand-authored exercise variants and seed script"
@@ -385,7 +390,7 @@ export function earnedBadges(input: { totalSessions: number; streak: number; max
 
 Веса типов (фиксируем): `comic → {attention:1, memory:2, logic:3, control:1}`, `data → {attention:2, memory:1, logic:3, control:2}`, `robot → {attention:2, memory:2, logic:2, control:3}`. Очки = вес × точность × уровень.
 
-- [ ] **Step 1: Написать падающие тесты**
+- [x] **Step 1: Написать падающие тесты**
 
 `tests/unit/engine.test.ts`:
 
@@ -442,9 +447,9 @@ describe("earnedBadges", () => {
 });
 ```
 
-- [ ] **Step 2: Прогнать — убедиться, что падают** (`engine.ts` не существует).
+- [x] **Step 2: Прогнать — убедиться, что падают** (`engine.ts` не существует).
 
-- [ ] **Step 3: Реализовать `src/lib/engine.ts`**
+- [x] **Step 3: Реализовать `src/lib/engine.ts`**
 
 ```ts
 import type { CognitiveScores } from "@/lib/exercise-types";
@@ -545,9 +550,9 @@ export function aggregateWeek(
 
 Примечание: `SessionResult` не имеет `createdAt` в схеме Task 1 — добавить поле `createdAt DateTime @default(now())` в модель `SessionResult` и прогнать `npx prisma migrate dev --name result-createdat` в этом таске.
 
-- [ ] **Step 4: Прогнать тесты** — `npx vitest run tests/unit/engine.test.ts` → PASS.
+- [x] **Step 4: Прогнать тесты** — `npx vitest run tests/unit/engine.test.ts` → PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A && git commit -m "feat: rule-based engine (levels, rotation, scores, streak, badges)"
@@ -569,7 +574,7 @@ git add -A && git commit -m "feat: rule-based engine (levels, rotation, scores, 
   - `POST /api/child-login` `{childId, pin}` → ставит httpOnly-cookie `nk_child=<childId>` (подписанную HMAC, секрет `AUTH_SECRET`); 401 при неверном PIN.
   - `getChildId(req): string | null` из `src/lib/child-session.ts` — проверка cookie в детских API.
 
-- [ ] **Step 1: Падающий интеграционный тест**
+- [x] **Step 1: Падающий интеграционный тест**
 
 `tests/integration/auth.test.ts` (вызываем route-handlers напрямую как функции):
 
@@ -614,9 +619,9 @@ describe("child login", () => {
 });
 ```
 
-- [ ] **Step 2: Прогнать — FAIL** (роуты не существуют).
+- [x] **Step 2: Прогнать — FAIL** (роуты не существуют).
 
-- [ ] **Step 3: Реализовать**
+- [x] **Step 3: Реализовать**
 
 `src/app/api/register/route.ts`:
 
@@ -655,9 +660,9 @@ export async function POST(req: Request) {
 
 `src/lib/child-session.ts` — подпись `childId` через `crypto.createHmac("sha256", process.env.AUTH_SECRET!)`, cookie `nk_child=<id>.<sig>; HttpOnly; Path=/; Max-Age=2592000`; `getChildId` проверяет подпись и возвращает id либо null. `src/app/api/child-login/route.ts` сверяет PIN (`db.child.findUnique`) и ставит cookie через `NextResponse.json(...).cookies.set(...)`. NextAuth: credentials-провайдер `authorize` сверяет bcrypt-хеш, `jwt`/`session` колбэки кладут `parentId`.
 
-- [ ] **Step 4: Прогнать тесты** → PASS.
+- [x] **Step 4: Прогнать тесты** → PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A && git commit -m "feat: parent auth (NextAuth) and child profile+PIN login"
@@ -682,7 +687,7 @@ export type Access = { allowed: boolean; reason: "ok" | "free_tier_limit" | "exp
 export function checkAccess(sub: { status: string; trialEndsAt: Date }, sessionsToday: number, now: Date): Access;
 ```
 
-- [ ] **Step 1: Падающие тесты**
+- [x] **Step 1: Падающие тесты**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -708,7 +713,7 @@ describe("checkAccess", () => {
 });
 ```
 
-- [ ] **Step 2: FAIL → Step 3: Реализовать**
+- [x] **Step 2: FAIL → Step 3: Реализовать**
 
 ```ts
 export type Access = { allowed: boolean; reason: "ok" | "free_tier_limit" | "expired_soft"; exercisesAllowed: 1 | 3 };
@@ -728,7 +733,7 @@ export function checkAccess(
 }
 ```
 
-- [ ] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: subscription access gating (trial/free tier)"`
+- [x] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: subscription access gating (trial/free tier)"`
 
 ---
 
@@ -745,9 +750,9 @@ export function checkAccess(
   - `POST /api/session/:id/submit` `{exerciseId, accuracy, durationSec}` → пишет `SessionResult` со `scoresJson = computeScores(...)`, 200 `{ok:true}`.
   - `POST /api/session/:id/finish` `{feedbackEmoji}` → ставит `finishedAt`, обновляет `streak` (по `nextStreak`), `mascotLevel = 1 + floor(totalSessions/5)` (кэп 5), создаёт новые `Achievement` (upsert по `@@unique`), возвращает `{streak, mascotLevel, newBadges, summary}` где `summary` — человекочитаемые строки «что развивал».
 
-- [ ] **Step 1: Падающий интеграционный тест** — полный цикл: register → child-login (взять cookie) → start (3 упражнения) → 3× submit → finish; проверки: `SessionResult` 3 шт., `streak === 1`, `newBadges` содержит `firstSession`; повторный start в тот же день при `expired`-подписке → 403 (подготовить подписку через `db.subscription.update({status:"canceled"})` и одну сессию). Тест пишется в стиле Task 4 (route-handlers как функции, cookie передаётся в `Request` headers).
+- [x] **Step 1: Падающий интеграционный тест** — полный цикл: register → child-login (взять cookie) → start (3 упражнения) → 3× submit → finish; проверки: `SessionResult` 3 шт., `streak === 1`, `newBadges` содержит `firstSession`; повторный start в тот же день при `expired`-подписке → 403 (подготовить подписку через `db.subscription.update({status:"canceled"})` и одну сессию). Тест пишется в стиле Task 4 (route-handlers как функции, cookie передаётся в `Request` headers).
 
-- [ ] **Step 2: FAIL → Step 3: Реализовать роуты.** Ключевой фрагмент `start`:
+- [x] **Step 2: FAIL → Step 3: Реализовать роуты.** Ключевой фрагмент `start`:
 
 ```ts
 const childId = getChildId(req);
@@ -776,7 +781,7 @@ return NextResponse.json({
 });
 ```
 
-- [ ] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: session lifecycle API (start/submit/finish)"`
+- [x] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: session lifecycle API (start/submit/finish)"`
 
 ---
 
@@ -797,9 +802,9 @@ export type ExerciseProps<C> = { content: C; onComplete: (r: ExerciseResult) => 
 
 `ComicExercise` рендерит панели (эмодзи-сцена + реплика), для скрытой — 3 кнопки-варианта. Неверный вариант: кнопка мягко подсвечивается серым, показывается подсказка «Перечитай предыдущую реплику 🙂», попытки не ограничены. `accuracy = 1` с первой попытки, `0.6` со второй, `0.3` с третьей+. По верному ответу — `onComplete`.
 
-- [ ] **Step 1: Падающий тест** — рендер с фикстурой из `comics[0]`, клик по неверному варианту → подсказка видна и `onComplete` не вызван; клик по верному → `onComplete` с `accuracy: 0.6`.
-- [ ] **Step 2: FAIL → Step 3: Реализовать** (клиентский компонент, Tailwind; текст ≥18px, кнопки ≥44px высоты, transition 200ms).
-- [ ] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: comic exercise component"`
+- [x] **Step 1: Падающий тест** — рендер с фикстурой из `comics[0]`, клик по неверному варианту → подсказка видна и `onComplete` не вызван; клик по верному → `onComplete` с `accuracy: 0.6`.
+- [x] **Step 2: FAIL → Step 3: Реализовать** (клиентский компонент, Tailwind; текст ≥18px, кнопки ≥44px высоты, transition 200ms).
+- [x] **Step 4: PASS → Step 5: Commit** — `git commit -m "feat: comic exercise component"`
 
 ---
 
@@ -815,9 +820,9 @@ export type ExerciseProps<C> = { content: C; onComplete: (r: ExerciseResult) => 
 
 Механика: показывается график, затем вопросы по одному (2–3). Каждый вопрос — 3 варианта. `accuracy` = среднее по вопросам (та же шкала попыток, что в Task 7). После последнего вопроса → `onComplete`.
 
-- [ ] **Step 1: Падающий тест** — фикстура с 2 вопросами: верный ответ на оба с первой попытки → `onComplete({accuracy: 1, ...})`; на втором вопросе первый клик неверный → итог `accuracy = (1 + 0.6) / 2 = 0.8`.
-- [ ] **Step 2–4: FAIL → реализация → PASS.**
-- [ ] **Step 5: Commit** — `git commit -m "feat: data analysis exercise with SVG bar chart"`
+- [x] **Step 1: Падающий тест** — фикстура с 2 вопросами: верный ответ на оба с первой попытки → `onComplete({accuracy: 1, ...})`; на втором вопросе первый клик неверный → итог `accuracy = (1 + 0.6) / 2 = 0.8`.
+- [x] **Step 2–4: FAIL → реализация → PASS.**
+- [x] **Step 5: Commit** — `git commit -m "feat: data analysis exercise with SVG bar chart"`
 
 ---
 
@@ -840,9 +845,9 @@ export function simulate(grid: string[], commands: ("up"|"down"|"left"|"right")[
 
 UI: сетка-поле, панель команд (кнопки-стрелки добавляют команду в очередь, счётчик энергии убывает), кнопка «Запустить» анимирует робота по `path` (CSS-переход 200ms на клетку). Ловушка/стена/нехватка энергии — робот мигает, реплика маскота «Почти! Попробуй другой маршрут», очередь очищается, попытки не ограничены. `accuracy` по числу запусков: 1 / 0.6 / 0.3 (как в Task 7).
 
-- [ ] **Step 1: Падающие тесты `robot-sim`** — грид `["S..","#.#","..F"]`: путь `right,right,down,down` → `finish`; `down` → `trap`; `up` → `wall`; лимит энергии 2 с командами длиннее → `out_of_energy`.
-- [ ] **Step 2–4: FAIL → реализация → PASS** (сначала `robot-sim`, затем компонент).
-- [ ] **Step 5: Commit** — `git commit -m "feat: robot logic exercise with simulator"`
+- [x] **Step 1: Падающие тесты `robot-sim`** — грид `["S..","#.#","..F"]`: путь `right,right,down,down` → `finish`; `down` → `trap`; `up` → `wall`; лимит энергии 2 с командами длиннее → `out_of_energy`.
+- [x] **Step 2–4: FAIL → реализация → PASS** (сначала `robot-sim`, затем компонент).
+- [x] **Step 5: Commit** — `git commit -m "feat: robot logic exercise with simulator"`
 
 ---
 
@@ -859,9 +864,9 @@ UI: сетка-поле, панель команд (кнопки-стрелки 
 
 Экран сессии: получает `exercises` от `/api/session/start`, рендерит по одному через маппинг `type → компонент`, после каждого `onComplete` шлёт `/submit`, после последнего — экран итогов: список «Сегодня ты развивал: внимание, логику…» (из типов упражнений, упрощённым языком), выбор эмодзи (😍😊😐😕 → `love|good|meh|bad`) → `/finish` → показ стрика, новых бейджей, реплики маскота. При 403 `free_tier_limit` — мягкий экран: маскот + «На сегодня всё! Новая тренировка — завтра. Попроси родителя продлить полный доступ». Главный экран: маскот с приветствием, стрик 🔥, большая кнопка «Начать сессию», ссылка «Мои успехи». Прогресс: уровень маскота, сетка бейджей (заработанные цветные, остальные серые).
 
-- [ ] **Step 1: Падающий тест `mascot-lines`** — каждый контекст возвращает непустую строку из своего пула; пулы ≥3 реплик.
-- [ ] **Step 2–4: FAIL → реализация → PASS.** Ручная проверка: `npm run dev`, пройти полный флоу ребёнком.
-- [ ] **Step 5: Commit** — `git commit -m "feat: child screens (login, home, session flow, progress)"`
+- [x] **Step 1: Падающий тест `mascot-lines`** — каждый контекст возвращает непустую строку из своего пула; пулы ≥3 реплик.
+- [x] **Step 2–4: FAIL → реализация → PASS.** Ручная проверка: `npm run dev`, пройти полный флоу ребёнком.
+- [x] **Step 5: Commit** — `git commit -m "feat: child screens (login, home, session flow, progress)"`
 
 ---
 
@@ -877,9 +882,9 @@ UI: сетка-поле, панель команд (кнопки-стрелки 
 
 Дашборд: карточка ребёнка → 4 строки `ScaleBar` (название шкалы по-русски, полоса %, дельта «↑12%» зелёным / «↓» серым — не красным), сессий за неделю, стрик. Блок подписки: статус («Пробный период до 18 июля» / «Активна, следующее списание …»), кнопка «Управление подпиской» → Task 12.
 
-- [ ] **Step 1: Падающий тест** — сид: родитель + ребёнок + 2 завершённые сессии с результатами; `GET /api/parent/stats` с mock-сессией → `sessionsThisWeek === 2`, шкалы > 0; без сессии → 401.
-- [ ] **Step 2–4: FAIL → реализация → PASS.**
-- [ ] **Step 5: Commit** — `git commit -m "feat: parent dashboard with weekly cognitive stats"`
+- [x] **Step 1: Падающий тест** — сид: родитель + ребёнок + 2 завершённые сессии с результатами; `GET /api/parent/stats` с mock-сессией → `sessionsThisWeek === 2`, шкалы > 0; без сессии → 401.
+- [x] **Step 2–4: FAIL → реализация → PASS.**
+- [x] **Step 5: Commit** — `git commit -m "feat: parent dashboard with weekly cognitive stats"`
 
 ---
 
@@ -961,12 +966,12 @@ export function nextSubscriptionState(
   - `POST /api/billing/cancel` → `cancel_requested`.
   - Fallback-сверка: при `GET /api/parent/stats` (Task 11 — modify) если `status === "past_due"` и `nextBillingAt + 3д < now` → применить `grace_expired`.
 
-- [ ] **Step 1: Падающие unit-тесты `nextSubscriptionState`** — все переходы из спеки: trial+succeeded→active; active+canceled→past_due; past_due+grace_expired→expired; active+cancel_requested→canceled; повторный succeeded в active → active (идемпотентность, обновляется nextBillingAt).
-- [ ] **Step 2: FAIL → Step 3: Реализовать `billing.ts`, `yookassa.ts`, роуты.** Секреты — из `.env`: `YOOKASSA_SHOP_ID`, `YOOKASSA_SECRET`. Без ключей в dev режиме `checkout` возвращает `{confirmationUrl: "/parent/subscription?mock=success"}` и webhook можно дёрнуть вручную — флаг `BILLING_MOCK=1`.
-- [ ] **Step 4: Интеграционный тест webhook** — POST с телом `{event: "payment.succeeded", object: {payment_method: {id: "pm_1"}, metadata: {parentId}}}` → статус подписки в БД `active`, `paymentMethodId === "pm_1"`.
-- [ ] **Step 5: Страница подписки** — статус, цена 299 ₽/мес, кнопка «Оформить» (→ checkout → redirect), «Отменить подписку» (один клик, confirm-диалог), история: список платежей не храним в v1 — показываем `nextBillingAt`.
-- [ ] **Step 6: Прогнать все тесты** — `npx vitest run` → PASS.
-- [ ] **Step 7: Commit** — `git commit -m "feat: YooKassa subscription (checkout, webhook, cancel, grace)"`
+- [x] **Step 1: Падающие unit-тесты `nextSubscriptionState`** — все переходы из спеки: trial+succeeded→active; active+canceled→past_due; past_due+grace_expired→expired; active+cancel_requested→canceled; повторный succeeded в active → active (идемпотентность, обновляется nextBillingAt).
+- [x] **Step 2: FAIL → Step 3: Реализовать `billing.ts`, `yookassa.ts`, роуты.** Секреты — из `.env`: `YOOKASSA_SHOP_ID`, `YOOKASSA_SECRET`. Без ключей в dev режиме `checkout` возвращает `{confirmationUrl: "/parent/subscription?mock=success"}` и webhook можно дёрнуть вручную — флаг `BILLING_MOCK=1`.
+- [x] **Step 4: Интеграционный тест webhook** — POST с телом `{event: "payment.succeeded", object: {payment_method: {id: "pm_1"}, metadata: {parentId}}}` → статус подписки в БД `active`, `paymentMethodId === "pm_1"`.
+- [x] **Step 5: Страница подписки** — статус, цена 299 ₽/мес, кнопка «Оформить» (→ checkout → redirect), «Отменить подписку» (один клик, confirm-диалог), история: список платежей не храним в v1 — показываем `nextBillingAt`.
+- [x] **Step 6: Прогнать все тесты** — `npx vitest run` → PASS.
+- [x] **Step 7: Commit** — `git commit -m "feat: YooKassa subscription (checkout, webhook, cancel, grace)"`
 
 </details>
 
@@ -981,11 +986,11 @@ export function nextSubscriptionState(
 **Interfaces:**
 - Consumes: всё выше.
 
-- [ ] **Step 1: E2E happy-path** (`BILLING_MOCK=1`, seeded DB): регистрация родителя → выход → детский вход (профиль+PIN) → «Начать сессию» → пройти 3 упражнения (фикстурные ответы: в E2E-режиме сид детерминирован через `Config.e2eSeed`) → эмодзи-фидбек → главный экран показывает стрик 🔥1.
-- [ ] **Step 2: Прогнать** — `npx playwright test` → PASS.
-- [ ] **Step 3: Полиш-чек по Global Constraints** — прогнать руками: детский текст ≥18px, кнопки ≥44px, контраст WCAG AA (проверить палитру на webaim), нет красных индикаторов ошибок ребёнка, переходы 200–300ms.
-- [ ] **Step 4: Обновить README** — как запустить: `npm i && npx prisma migrate dev && npx prisma db seed && npm run dev`; env-переменные (`DATABASE_URL`, `AUTH_SECRET`, `YOOKASSA_*`, `BILLING_MOCK`).
-- [ ] **Step 5: Финальный прогон всех тестов и commit**
+- [x] **Step 1: E2E happy-path** (`BILLING_MOCK=1`, seeded DB): регистрация родителя → выход → детский вход (профиль+PIN) → «Начать сессию» → пройти 3 упражнения (фикстурные ответы: в E2E-режиме сид детерминирован через `Config.e2eSeed`) → эмодзи-фидбек → главный экран показывает стрик 🔥1.
+- [x] **Step 2: Прогнать** — `npx playwright test` → PASS.
+- [x] **Step 3: Полиш-чек по Global Constraints** — прогнать руками: детский текст ≥18px, кнопки ≥44px, контраст WCAG AA (проверить палитру на webaim), нет красных индикаторов ошибок ребёнка, переходы 200–300ms.
+- [x] **Step 4: Обновить README** — как запустить: `npm i && npx prisma migrate dev && npx prisma db seed && npm run dev`; env-переменные (`DATABASE_URL`, `AUTH_SECRET`, `YOOKASSA_*`, `BILLING_MOCK`).
+- [x] **Step 5: Финальный прогон всех тестов и commit**
 
 ```bash
 npx vitest run && npx playwright test
