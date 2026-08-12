@@ -4,6 +4,10 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // NextAuth v5 refuses callbacks from a Host header it doesn't recognize
+  // unless told to trust it — dev mode auto-trusts localhost, but `next
+  // start` (production) does not, so this is required outside Vercel.
+  trustHost: true,
   session: { strategy: "jwt" },
   providers: [
     Credentials({

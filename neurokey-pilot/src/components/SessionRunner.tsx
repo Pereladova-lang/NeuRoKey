@@ -60,7 +60,7 @@ export function SessionRunner({ sessionId, exercises }: { sessionId: string; exe
     const durationSec = () => Math.round((Date.now() - startedAt) / 1000);
     return (
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-lg text-muted-foreground">
           Упражнение {index + 1} из {exercises.length}
         </p>
         {current.type === "comic" && (

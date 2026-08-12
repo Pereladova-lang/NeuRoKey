@@ -58,6 +58,7 @@ export function ComicExercise({ content, onComplete }: ExerciseProps<ComicConten
           <button
             key={i}
             type="button"
+            data-testid="exercise-option"
             onClick={() => handleOptionClick(i)}
             className={cn(
               "min-h-11 rounded-xl border border-border px-4 py-3 text-left text-lg transition-colors duration-200",

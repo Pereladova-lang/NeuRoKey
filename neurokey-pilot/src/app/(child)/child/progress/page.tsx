@@ -25,7 +25,7 @@ export default async function ChildProgressPage() {
   return (
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col items-center gap-8 p-6">
       <Mascot level={child.mascotLevel} />
-      <div className="grid w-full grid-cols-3 gap-4">
+      <div className="grid w-full grid-cols-2 gap-4">
         {ALL_BADGES.map((badge) => (
           <div
             key={badge.key}
@@ -35,7 +35,7 @@ export default async function ChildProgressPage() {
             )}
           >
             <span className="text-3xl">{badge.emoji}</span>
-            <span className="text-sm">{badge.label}</span>
+            <span className="text-lg">{badge.label}</span>
           </div>
         ))}
       </div>

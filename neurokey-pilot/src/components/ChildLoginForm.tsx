@@ -66,7 +66,7 @@ export function ChildLoginForm({ profiles }: { profiles: ChildProfile[] }) {
         className="h-14 text-center text-2xl tracking-[0.5em]"
         autoFocus
       />
-      {error && <p className="text-sm text-destructive">Неверный PIN, попробуй ещё раз</p>}
+      {error && <p className="text-lg text-destructive">Неверный PIN, попробуй ещё раз</p>}
       <div className="flex w-full gap-2">
         <Button type="button" variant="outline" className="h-12 flex-1 text-lg" onClick={() => setSelected(null)}>
           Назад

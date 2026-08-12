@@ -38,11 +38,15 @@ export async function POST(req: Request) {
   const lastFirst = await lastFirstExerciseType(childId);
   const types = pickSessionTypes(lastFirst).slice(0, access.exercisesAllowed) as ExerciseType[];
 
+  // E2E mode (Config.e2eSeed present): pick a stable exercise per type/level instead of a
+  // random one, so tests/e2e/child-session.spec.ts can compute the correct answer up front.
+  const e2eSeed = await db.config.findUnique({ where: { key: "e2eSeed" } });
+
   const exercises = await Promise.all(
     types.map(async (type) => {
       const level = await currentLevelFor(childId, type);
-      const pool = await db.exercise.findMany({ where: { type, level } });
-      return pool[Math.floor(Math.random() * pool.length)];
+      const pool = await db.exercise.findMany({ where: { type, level }, orderBy: { id: "asc" } });
+      return e2eSeed ? pool[0] : pool[Math.floor(Math.random() * pool.length)];
     }),
   );
 
