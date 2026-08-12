@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NeuRoKey — pilot (11–14 age cohort)
 
-## Getting Started
+Next.js pilot app: a child completes a short adaptive cognitive-training session
+(comic, data-analysis, robot-logic exercises) before earning access to their
+reward content. See `../brief.md` and
+`../docs/superpowers/specs/2026-07-15-neurokey-pilot-design.md` in the repo
+root for the product spec.
 
-First, run the development server:
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npx prisma migrate dev   # creates the SQLite DB and applies migrations
+npx prisma db seed       # loads the 90 hand-authored exercises
+npm run dev              # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Requires a `.env` (or `.env.local`) with:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+DATABASE_URL="file:./dev.db"
+AUTH_SECRET="<any random string>"       # NextAuth session signing secret
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Robokassa billing (subscription checkout / webhook / cancel)
+ROBOKASSA_MERCHANT_LOGIN="..."
+ROBOKASSA_PASSWORD="..."
+ROBOKASSA_IS_TEST="1"                   # omit/0 in production
 
-## Learn More
+BILLING_MOCK="1"                        # skip real Robokassa redirect in dev/test
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Commands
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev              # dev server, http://localhost:3000
+npm run build             # production build
+npm run lint               # eslint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+npx vitest run                                 # all unit + integration tests
+npx vitest run tests/unit/engine.test.ts        # single test file
+npx vitest                                       # watch mode
+npx playwright test                              # e2e tests (builds + starts a prod server)
 
-## Deploy on Vercel
+npx prisma migrate dev --name <name>            # create + apply a migration
+npx prisma db seed                              # run prisma/seed.ts (90 hand-authored exercises)
+npx prisma studio                                # inspect the SQLite DB
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`npx playwright test` runs against `npm run build && npm run start` rather
+than the dev server — see `playwright.config.ts` for why.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Architecture
+
+See `../CLAUDE.md` in the repo root for the full architecture writeup
+(domain logic in `src/lib/`, data model, core concepts). Short version:
+monolith Next.js App Router, SQLite via Prisma, adaptive rule engine in
+`src/lib/engine.ts`.
