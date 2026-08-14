@@ -1,0 +1,631 @@
+<title>NeuRoKey для партнёров</title>
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  :root {
+    --bg: #FAFAFC;
+    --surface: #F1F0FA;
+    --surface-2: #FFFFFF;
+    --ink: #15141F;
+    --ink-muted: #5B5A72;
+    --ink-faint: #8B8AA0;
+    --border: #E3E1F0;
+    --accent: #6366F1;
+    --accent-soft: #E7E7FC;
+    --accent-2: #06B6D4;
+    --accent-2-soft: #DDF6FA;
+    --warm: #B45309;
+    --warm-soft: #FDF1DC;
+    --on-accent: #FFFFFF;
+    --shadow: 0 1px 2px rgba(20, 20, 40, 0.04), 0 8px 24px -12px rgba(20, 20, 40, 0.12);
+
+    --font-display: "JetBrains Mono", "SFMono-Regular", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B0B14;
+      --surface: #15151F;
+      --surface-2: #1B1B28;
+      --ink: #F1F0F8;
+      --ink-muted: #ACAAC4;
+      --ink-faint: #726F8C;
+      --border: #2A2A3C;
+      --accent: #8B8FF7;
+      --accent-soft: #23233A;
+      --accent-2: #34D9F0;
+      --accent-2-soft: #10303A;
+      --warm: #F0B24E;
+      --warm-soft: #35270F;
+      --on-accent: #0B0B14;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -12px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0B0B14;
+    --surface: #15151F;
+    --surface-2: #1B1B28;
+    --ink: #F1F0F8;
+    --ink-muted: #ACAAC4;
+    --ink-faint: #726F8C;
+    --border: #2A2A3C;
+    --accent: #8B8FF7;
+    --accent-soft: #23233A;
+    --accent-2: #34D9F0;
+    --accent-2-soft: #10303A;
+    --warm: #F0B24E;
+    --warm-soft: #35270F;
+    --on-accent: #0B0B14;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible, .navlink:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  h1 { font-size: clamp(2.1rem, 4.6vw, 3.8rem); line-height: 1.06; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.35rem); line-height: 1.15; }
+  h3 { font-size: 1.15rem; line-height: 1.3; }
+
+  p { margin: 0; color: var(--ink-muted); text-wrap: pretty; }
+  .lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink); max-width: 42em; }
+
+  .prose p + p { margin-top: 0.9em; }
+
+  strong { color: var(--ink); font-weight: 650; }
+
+  /* ---- shell ---- */
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); }
+  .narrow { max-width: 44em; }
+
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav.top .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px; gap: 20px;
+  }
+  .brand {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 8px; color: var(--ink);
+    text-decoration: none;
+  }
+  .navlinks { display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none; }
+  .navlinks::-webkit-scrollbar { display: none; }
+  .navlink {
+    font-family: var(--font-display); font-size: 0.74rem; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-faint); text-decoration: none;
+    white-space: nowrap; padding: 4px 0; border-bottom: 2px solid transparent;
+  }
+  .navlink:hover { color: var(--ink); border-color: var(--accent); }
+
+  section { padding: clamp(52px, 9vw, 108px) 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
+  .section-head h2 { max-width: 20ch; }
+
+  /* ---- hero ---- */
+  .hero { padding-top: clamp(56px, 10vw, 96px); border-top: none !important; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center;
+  }
+  @media (max-width: 780px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .hero h1 { margin-top: 18px; }
+  .hero .lede { margin-top: 22px; }
+
+  .keyviz { width: 100%; height: auto; }
+  .keyviz .stroke { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .keyviz .stroke-2 { fill: none; stroke: var(--accent-2); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .keyviz .dot { fill: var(--accent); }
+  .keyviz .dim { stroke: var(--border); }
+
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; margin-top: 48px;
+  }
+  @media (max-width: 620px) { .stat-row { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--surface-2); padding: 20px 22px;
+  }
+  .stat .n {
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .l { margin-top: 4px; font-size: 0.85rem; color: var(--ink-muted); }
+
+  /* ---- cards / grids ---- */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 780px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 26px 24px; box-shadow: var(--shadow);
+  }
+  .card .tag {
+    font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent-2); font-weight: 600;
+  }
+  .card h3 { margin-top: 10px; }
+  .card p { margin-top: 10px; font-size: 0.96rem; }
+
+  /* layer diagram */
+  .layers { display: flex; flex-direction: column; gap: 12px; }
+  .layer {
+    display: grid; grid-template-columns: 140px 1fr; gap: 18px; align-items: start;
+    padding: 18px 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2);
+  }
+  @media (max-width: 620px) { .layer { grid-template-columns: 1fr; gap: 6px; } }
+  .layer .name { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; padding-top: 2px; }
+  .layer.academic { border-left: 3px solid var(--accent-2); }
+  .layer.cognitive { border-left: 3px solid var(--accent); }
+  .layer.compensatory { border-left: 3px solid var(--warm); }
+  .layer .name.academic-c { color: var(--accent-2); }
+  .layer .name.cognitive-c { color: var(--accent); }
+  .layer .name.compensatory-c { color: var(--warm); }
+  .layer .ex { margin-top: 6px; font-size: 0.88rem; color: var(--ink-faint); }
+
+  /* status list */
+  .status-list { display: flex; flex-direction: column; gap: 10px; }
+  .status-item {
+    display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+  }
+  .status-item:last-child { border-bottom: none; }
+  .status-icon { font-family: var(--font-display); font-size: 0.95rem; padding-top: 2px; }
+  .status-icon.done { color: var(--accent-2); }
+  .status-icon.wip { color: var(--warm); }
+  .status-icon.rd { color: var(--accent); }
+  .status-item .t { color: var(--ink); font-weight: 600; font-size: 0.97rem; }
+  .status-item .d { margin-top: 3px; font-size: 0.9rem; }
+
+  .status-group-label {
+    font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    margin: 30px 0 10px; color: var(--ink-faint);
+  }
+  .status-group-label:first-child { margin-top: 0; }
+
+  /* bars */
+  .bars { display: flex; flex-direction: column; gap: 14px; }
+  .bar-row { display: grid; grid-template-columns: 90px 1fr 46px; align-items: center; gap: 12px; }
+  .bar-row .label { font-size: 0.88rem; color: var(--ink-muted); }
+  .bar-track { height: 8px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 6px; }
+  .bar-row .val { font-family: var(--font-display); font-size: 0.85rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+
+  /* roadmap timeline */
+  .timeline { display: flex; flex-direction: column; }
+  .tl-item {
+    display: grid; grid-template-columns: 150px 1px 1fr; gap: 22px;
+    padding: 20px 0;
+  }
+  .tl-item .rail { position: relative; background: var(--border); }
+  .tl-item .rail::before {
+    content: ""; position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+  }
+  .tl-item.current .rail::before { background: var(--warm); box-shadow: 0 0 0 4px var(--warm-soft); }
+  .tl-item .age { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; padding-top: 1px; }
+  .tl-item .badge {
+    display: inline-block; margin-top: 6px; font-family: var(--font-display); font-size: 0.66rem;
+    letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+    background: var(--warm-soft); color: var(--warm); font-weight: 700;
+  }
+  .tl-item h3 { font-size: 1.02rem; }
+  .tl-item p { margin-top: 6px; font-size: 0.94rem; }
+  @media (max-width: 640px) {
+    .tl-item { grid-template-columns: 20px 1px 1fr; }
+    .tl-item .age-wrap { display: contents; }
+  }
+
+  /* pricing table */
+  table.pricing { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  table.pricing th, table.pricing td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  table.pricing th { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+  table.pricing td.num { font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 600; }
+  .table-scroll { overflow-x: auto; }
+
+  /* invitation / RnD tracks */
+  .track { display: grid; grid-template-columns: 40px 1fr; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .track:last-child { border-bottom: none; }
+  .track .idx { font-family: var(--font-display); font-weight: 700; color: var(--ink-faint); font-size: 1.1rem; }
+  .track h3 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pill {
+    font-family: var(--font-display); font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px; font-weight: 700;
+  }
+  .pill.eng { background: var(--accent-2-soft); color: var(--accent-2); }
+  .pill.sci { background: var(--accent-soft); color: var(--accent); }
+  .pill.prod { background: var(--warm-soft); color: var(--warm); }
+  .track p { margin-top: 8px; font-size: 0.95rem; }
+
+  /* footer / cta */
+  footer.cta {
+    background: var(--surface); border-top: 1px solid var(--border);
+  }
+  .cta-box { text-align: center; max-width: 40em; margin: 0 auto; }
+  .cta-box h2 { margin-bottom: 16px; }
+  .cta-box p { margin: 0 auto; }
+  .cta-note {
+    margin-top: 28px; font-family: var(--font-display); font-size: 0.8rem; color: var(--ink-faint);
+  }
+
+  .quote {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 20px; margin: 28px 0;
+    font-size: 1.05rem; color: var(--ink); font-style: normal;
+  }
+  .quote cite { display: block; margin-top: 8px; font-family: var(--font-display); font-size: 0.75rem; color: var(--ink-faint); font-style: normal; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+</style>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="2.2"/><line x1="12" y1="12" x2="21" y2="21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><line x1="16" y1="17" x2="19" y2="14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      NEUROKEY
+    </a>
+    <div class="navlinks">
+      <a class="navlink" href="#problem">Проблема</a>
+      <a class="navlink" href="#how">Механика</a>
+      <a class="navlink" href="#today">Что есть сейчас</a>
+      <a class="navlink" href="#platform">Платформа</a>
+      <a class="navlink" href="#roadmap">Roadmap</a>
+      <a class="navlink" href="#business">Бизнес-модель</a>
+      <a class="navlink" href="#partners">Партнёрам</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Партнёрская презентация · Платформа для команд-разработчиков · Август 2026</p>
+        <h1>Телефон становится не источником цифровой зависимости, а&nbsp;персональным тренером мозга</h1>
+        <p class="lede">NeuRoKey — нейроадаптивная образовательная платформа: прежде чем ребёнок получит доступ к высокодофаминовому контенту (YouTube, TikTok, игры), он проходит короткую адаптивную когнитивную сессию. Это не родительский контроль, который ограничивает, — это тренировка, которая использует само желание получить дофамин как точку входа в развитие.</p>
+      </div>
+      <svg class="keyviz" viewBox="0 0 260 220" role="img" aria-label="Схематичное изображение ключа: круглая головка соединена стержнем с бородкой в виде ступенчатой решётки">
+        <circle class="stroke" cx="70" cy="70" r="46"/>
+        <circle class="stroke-2" cx="70" cy="70" r="20"/>
+        <circle class="dot" cx="70" cy="70" r="3.5"/>
+        <line class="stroke" x1="112" y1="98" x2="210" y2="196"/>
+        <path class="stroke" d="M 168 154 L 190 154 L 190 176"/>
+        <path class="stroke" d="M 188 174 L 206 174 L 206 192"/>
+        <path class="stroke-2" d="M 148 134 L 162 134 L 162 148"/>
+        <circle class="dim stroke" cx="70" cy="70" r="58" stroke-dasharray="1 7"/>
+      </svg>
+    </div>
+
+    <div class="wrap">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="n">11–14</div>
+          <div class="l">лет — возрастная когорта, на которой строится и проверяется пилот</div>
+        </div>
+        <div class="stat">
+          <div class="n">90</div>
+          <div class="l">вручную написанных вариантов упражнений, покрытых юнит-тестами движка</div>
+        </div>
+        <div class="stat">
+          <div class="n">4</div>
+          <div class="l">когнитивные шкалы (внимание, память, логика, контроль) — расширяемый реестр, не жёсткий список</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">01 · Проблема и рынок</p>
+        <h2>Дети выбирают дофамин.<br>Родители не могут предложить альтернативу быстрее, чем YouTube</h2>
+      </div>
+      <div class="grid-2">
+        <div class="prose narrow">
+          <p>Родительский контроль по умолчанию работает через запрет — и проигрывает: ребёнок либо обходит блокировку, либо воспринимает приложение как ещё один источник конфликта. NeuRoKey меняет рамку: доступ к контенту не отбирается, а обменивается на короткую (4–7 минут) тренировку, которая одновременно закрепляет школьный материал и развивает исполнительные функции мозга.</p>
+          <p>Каждая функция тренируется в узнаваемых терминах для родителя: <strong>внимание</strong>, <strong>память</strong>, <strong>логика</strong>, <strong>контроль импульсов</strong> — без формулировок, подразумевающих медицинскую диагностику.</p>
+        </div>
+        <div class="card">
+          <p class="tag">Размер рынка</p>
+          <div class="bars" style="margin-top:16px;">
+            <div class="bar-row"><span class="label">Глобально</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="val">2 млрд</span></div>
+            <div class="bar-row"><span class="label">Россия</span><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div><span class="val">20 млн</span></div>
+          </div>
+          <p style="margin-top:16px; font-size:0.88rem;">школьников с доступом в интернет; в РФ — 85% активно пользуются соцсетями. Готовность родителей платить за решение: <strong>€5–10/мес</strong> (оценка TAM, brief.md).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">02 · Как устроена одна сессия</p>
+        <h2>Каждое упражнение работает одновременно на трёх уровнях</h2>
+      </div>
+      <div class="layers">
+        <div class="layer academic">
+          <div class="name academic-c">Академический</div>
+          <div>
+            <p>Закрепляет школьный материал внутри игрового действия — не отдельным «уроком».</p>
+            <p class="ex">Пример пилота: анализ комикса с пропущенной репликой, интерпретация графика данных, задача на псевдокод.</p>
+          </div>
+        </div>
+        <div class="layer cognitive">
+          <div class="name cognitive-c">Нейрокогнитивный</div>
+          <div>
+            <p>Тренирует конкретную исполнительную функцию — ту, что просела за неделю активности.</p>
+            <p class="ex">Считается движком по каждому упражнению: внимание, память, логика, контроль — с фиксированными весами по типу упражнения.</p>
+          </div>
+        </div>
+        <div class="layer compensatory">
+          <div class="name compensatory-c">Компенсаторный</div>
+          <div>
+            <p>В целевой архитектуре — нейтрализует именно тот тип нагрузки, который дало предыдущее использование экрана.</p>
+            <p class="ex">Статус: рабочая гипотеза платформы, требует научной валидации — см. раздел «Куда приглашаем партнёров».</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="today">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">03 · Честная граница: что уже построено</p>
+        <h2>Пилот — не демо всего видения. Это узкая, проверяемая его часть</h2>
+        <p class="lede" style="font-size:1.05rem;">Мы сознательно не продаём партнёрам и инвесторам пилот как готовую реализацию полного продукта. Ниже — точный срез: что работает и покрыто тестами сегодня, что в разработке, и что остаётся исследовательской гипотезой.</p>
+      </div>
+
+      <div class="status-group-label">Построено и протестировано</div>
+      <div class="status-list">
+        <div class="status-item">
+          <div class="status-icon done">✓</div>
+          <div><div class="t">Модель данных пилота</div><div class="d">Prisma-схема: Parent → Subscription/Child, Child → Session/Achievement, Session → SessionResult → Exercise, Config для настраиваемых параметров.</div></div>
+        </div>
+        <div class="status-item">
+          <div class="status-icon done">✓</div>
+          <div><div class="t">90 упражнений для когорты 11–14</div><div class="d">Три типа — «Комикс-детектив», «Аналитик данных», «Робо-логика» — контент отделён от логики движка.</div></div>
+        </div>
+        <div class="status-item">
+          <div class="status-icon done">✓</div>
+          <div><div class="t">Rule-based адаптивный движок</div><div class="d">Изменение уровня по недавней точности, ротация типов упражнений в сессии, подсчёт очков по 4 когнитивным шкалам, ежедневный streak, бейджи, недельная агрегация прогресса — всё чистыми функциями, покрытыми юнит-тестами без базы данных.</div></div>
+        </div>
+      </div>
+
+      <div class="status-group-label">В разработке</div>
+      <div class="status-list">
+        <div class="status-item">
+          <div class="status-icon wip">▸</div>
+          <div><div class="t">Экраны и интеграции пилота</div><div class="d">Аутентификация родителя и PIN ребёнка, гейтинг подписки (trial → free tier), API сессий, рендеринг экранов упражнений, родительский дашборд, приём платежей (Robokassa), E2E-тесты.</div></div>
+        </div>
+        <div class="status-item">
+          <div class="status-icon wip">▸</div>
+          <div><div class="t">Платформенное ядро <code>@neurokey/core</code></div><div class="d">Дизайн одобрен 12 августа 2026, implementation-план написан по TDD-задачам. Выносит движок, когнитивный профиль и формат скилла в переиспользуемый npm-пакет — готово к исполнению, не выполнено на момент этой презентации.</div></div>
+        </div>
+      </div>
+
+      <div class="status-group-label">Исследовательская гипотеза, требует валидации</div>
+      <div class="status-list">
+        <div class="status-item">
+          <div class="status-icon rd">?</div>
+          <div><div class="t">ИИ-детекция типа экранной нагрузки и целевая компенсация</div><div class="d">Утверждение «TikTok → такой-то паттерн → компенсируется таким-то упражнением» — не доказанный механизм, а гипотеза, нуждающаяся в исследовании переноса эффекта.</div></div>
+        </div>
+        <div class="status-item">
+          <div class="status-icon rd">?</div>
+          <div><div class="t">Гейтинг доступа к контенту на уровне устройства</div><div class="d">iOS Screen Time и Android Accessibility Service дают стороннему приложению ограниченные права; блокировка по требованию может не пройти ревью App Store/Google Play — нужна отдельная техническая проверка до обещаний пользователям.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="platform">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">04 · Платформенное ядро — актив для расширения</p>
+        <h2>Методика отделяется от контента и интерфейса — и становится переиспользуемым, версионируемым IP</h2>
+        <p class="lede" style="font-size:1.05rem;">Правило разделения: <strong>пакет — это методика и правила, приложение — это контент и интерфейс.</strong> Пилот для 11–14 лет — первое приложение на этой платформе; следующие когорты, взрослая версия и B2B-продукты подключают то же ядро, не переписывая его.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <p class="tag">Cognitive Profile</p>
+          <h3>Возрасто-агностичный цифровой профиль</h3>
+          <p>Реестр когнитивных шкал открыт — сегодня это внимание/память/логика/контроль пилота, но схема не завязана на конкретный список. Профиль строится из baseline-диагностики, обновляется после каждой сессии, хранит недельные снепшоты для трендов.</p>
+          <p>Одна и та же структура данных обслуживает восьмилетнего ребёнка на пилоте, подростка на экзаменационном треке 15–18 и — в будущем — взрослого пользователя корпоративного когнитивного фитнеса.</p>
+        </div>
+        <div class="card">
+          <p class="tag">Skill</p>
+          <h3>Формат авторской методики</h3>
+          <p>Каждый способ компенсации нагрузки — версионируемая, датированная единица: условие срабатывания, целевые шкалы, параметры подбора упражнений, авторство и научные ссылки.</p>
+          <p>Это превращает методику из знания в голове эксперта в цитируемый, версионируемый актив — основу для патентной заявки и для соглашений о роялти с соавторами (доля — учётное поле, права фиксируются отдельным договором, трек A).</p>
+        </div>
+      </div>
+
+      <div class="quote" style="margin-top:36px;">
+        В пилоте <code>exerciseParams.typeWeights</code> уже соответствует существующим весам движка — то есть минимальный набор скиллов можно сформулировать, подписать авторством и источниками уже сейчас, без единой строки процедурной генерации.
+        <cite>— из дизайн-спеки платформенного ядра, 12 августа 2026</cite>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">05 · Roadmap возрастных треков</p>
+        <h2>Одна когнитивная механика — от «не нажимать на красную кнопку» в 6 лет до профессиональных решений в 35</h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="age-wrap"><div class="age">4–6 лет</div><span class="badge" style="visibility:hidden;">.</span></div>
+          <div class="rail"></div>
+          <div><h3>Создание фундамента</h3><p>Сенсомоторная интеграция, внимание, база письма и счёта.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="age-wrap"><div class="age">7–10 лет</div></div>
+          <div class="rail"></div>
+          <div><h3>Формирование учебного мозга</h3><p>Математика, чтение, английский + устойчивое внимание, рабочая память.</p></div>
+        </div>
+        <div class="tl-item current">
+          <div class="age-wrap"><div class="age">11–14 лет</div><span class="badge">Текущий пилот</span></div>
+          <div class="rail"></div>
+          <div><h3>Исполнительные функции</h3><p>Алгебра, анализ текста + когнитивная гибкость, планирование. Единственная когорта, реализованная в коде сегодня.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="age-wrap"><div class="age">15–18 лет</div></div>
+          <div class="rail"></div>
+          <div><h3>Подготовка к взрослому мышлению</h3><p>Экзамены, метапознание, управление цифровыми привычками.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="age-wrap"><div class="age">Университет</div></div>
+          <div class="rail"></div>
+          <div><h3>Академическая работа</h3><p>Чтение научных статей, работа с источниками, письмо, статистика.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="age-wrap"><div class="age">Профессии</div></div>
+          <div class="rail"></div>
+          <div><h3>Взрослый когнитивный фитнес</h3><p>Медицина, право, разработка, экономика + сквозные метанавыки. Отмечено внутренним ревью как потенциально уникальный актив — продольный когнитивный профиль, которого нет у EdTech-конкурентов; направление для отдельного продукта на этом же ядре, включая B2B (школы, психологи, корпоративный well-being).</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="business">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">06 · Бизнес-модель</p>
+        <h2>Freemium с недельным пробным доступом, апсейл — в семейный план</h2>
+      </div>
+      <div class="grid-2">
+        <div class="table-scroll">
+          <table class="pricing">
+            <thead><tr><th>План</th><th>Условие</th><th>Цена</th></tr></thead>
+            <tbody>
+              <tr><td>Free trial</td><td>7 дней полного доступа</td><td class="num">—</td></tr>
+              <tr><td>Free tier</td><td>после пробы, 1 упражнение/день</td><td class="num">€0</td></tr>
+              <tr><td>Premium</td><td>полный доступ, отчёты, дашборд</td><td class="num">€6.99/мес</td></tr>
+              <tr><td>Family (2 детей)</td><td>один родительский аккаунт</td><td class="num">€12.99/мес</td></tr>
+              <tr><td>Family (3 детей)</td><td>один родительский аккаунт</td><td class="num">€15.99/мес</td></tr>
+              <tr><td>Annual</td><td>Premium, годовая оплата</td><td class="num">€69.99/год</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <p class="tag">Целевые метрики первого пилота</p>
+          <div class="status-list" style="margin-top:14px;">
+            <div class="status-item"><div class="status-icon done">·</div><div><div class="t">100 пилотных семей</div><div class="d">4-недельный пилот со сбором метрик</div></div></div>
+            <div class="status-item"><div class="status-icon done">·</div><div><div class="t">Day-7 retention &gt; 60%</div><div class="d">критичный порог для перехода к следующей фазе</div></div></div>
+            <div class="status-item"><div class="status-icon done">·</div><div><div class="t">Улучшение внимания &gt; 15% за 4 недели</div><div class="d">по встроенному тесту, для научной валидации</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="partners">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">07 · Куда мы приглашаем партнёров</p>
+        <h2>Три независимых трека R&amp;D скрыты за словом «продукт» — и это осознанно</h2>
+        <p class="lede" style="font-size:1.05rem;">Дальнейшая разработка платформы будет вестись на других мощностях и с инструментами, которые сейчас трудно реализовать силами одной команды на «вайб-кодинге». Ниже — зоны, где партнёрство даёт наибольший рычаг.</p>
+      </div>
+
+      <div>
+        <div class="track">
+          <div class="idx">01</div>
+          <div>
+            <h3>Инженерный <span class="pill eng">Mobile OS</span></h3>
+            <p>Гейтинг доступа к контенту на уровне устройства технически не спроектирован. Нужна экспертиза в iOS Screen Time API и Android Accessibility Service — и трезвая оценка, пройдёт ли такой механизм ревью App Store и Google Play.</p>
+          </div>
+        </div>
+        <div class="track">
+          <div class="idx">02</div>
+          <div>
+            <h3>Научный <span class="pill sci">Нейропсихология</span></h3>
+            <p>Компенсаторная гипотеза нуждается в измерении «типа нагрузки от экрана» без айтрекера или ЭЭГ — правдоподобным проксёй через паттерны кликов и скролла — и в доказательстве, что конкретное упражнение снимает именно эту нагрузку за несколько минут.</p>
+          </div>
+        </div>
+        <div class="track">
+          <div class="idx">03</div>
+          <div>
+            <h3>Продуктовый <span class="pill prod">Уже строится</span></h3>
+            <p>Rule-based геймификация — самая дешёвая и наименее рискованная часть видения, полезная сама по себе, и то, что пилот реально проверяет прямо сейчас: готовы ли дети проходить короткую тренировку ради доступа к контенту.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="cta">
+  <div class="wrap" style="padding: 72px 0;">
+    <div class="cta-box">
+      <p class="eyebrow" style="justify-content:center; display:flex;">Партнёрство</p>
+      <h2>Ищем технических, научных и капитальных партнёров, готовых строить платформенное ядро вместе с нами</h2>
+      <p style="margin-top:16px;">Методика в NeuRoKey проектируется как версионируемый, авторски атрибутированный актив — с самого начала готовый к патентной заявке и к прозрачным договорам о доле для методологов и консультантов.</p>
+      <p class="cta-note">Контакты команды уточняются на момент публикации этой презентации.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var items = document.querySelectorAll('.card, .layer, .status-item, .tl-item, .track, .stat');
+  items.forEach(function (el) { el.classList.add('reveal'); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
