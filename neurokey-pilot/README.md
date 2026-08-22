@@ -56,3 +56,7 @@ See `../CLAUDE.md` in the repo root for the full architecture writeup
 (domain logic in `src/lib/`, data model, core concepts). Short version:
 monolith Next.js App Router, Postgres via Prisma, adaptive rule engine in
 `src/lib/engine.ts`.
+
+## Deployment
+
+Live pilot (Railway, auto-deploys from `main`): https://neurokey-pilot-production.up.railway.app
