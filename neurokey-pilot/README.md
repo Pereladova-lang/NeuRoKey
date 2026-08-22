@@ -44,7 +44,7 @@ npx playwright test                              # e2e tests (builds + starts a 
 
 npx prisma migrate dev --name <name>            # create + apply a migration
 npx prisma db seed                              # run prisma/seed.ts (90 hand-authored exercises)
-npx prisma studio                                # inspect the SQLite DB
+npx prisma studio                                # inspect the Postgres DB
 ```
 
 `npx playwright test` runs against `npm run build && npm run start` rather
@@ -54,5 +54,5 @@ than the dev server — see `playwright.config.ts` for why.
 
 See `../CLAUDE.md` in the repo root for the full architecture writeup
 (domain logic in `src/lib/`, data model, core concepts). Short version:
-monolith Next.js App Router, SQLite via Prisma, adaptive rule engine in
+monolith Next.js App Router, Postgres via Prisma, adaptive rule engine in
 `src/lib/engine.ts`.

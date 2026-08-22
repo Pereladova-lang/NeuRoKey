@@ -43,15 +43,16 @@ npx playwright test                              # e2e tests
 
 npx prisma migrate dev --name <name>            # create + apply a migration
 npx prisma db seed                              # run prisma/seed.ts (90 hand-authored exercises)
-npx prisma studio                                # inspect the SQLite DB
+npx prisma studio                                # inspect the Postgres DB
 ```
 
 There is no root-level build — always `cd neurokey-pilot` first. `DATABASE_URL` and `AUTH_SECRET`
-must be set (see `.env.example`); DB is SQLite (`file:./dev.db`).
+must be set (see `.env.example`); DB is Postgres (e.g. via Docker Compose locally —
+`postgresql://neurokey:neurokey_dev@localhost:5432/neurokey`).
 
 ## Architecture (neurokey-pilot)
 
-Monolith Next.js App Router: UI + API routes in one app, SQLite via Prisma. Core domain logic is
+Monolith Next.js App Router: UI + API routes in one app, Postgres via Prisma. Core domain logic is
 kept as **pure, unit-tested functions in `src/lib/`**, separate from UI/API, so behavior can be
 tested without a database or network:
 
