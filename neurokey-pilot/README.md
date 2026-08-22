@@ -9,21 +9,23 @@ root for the product spec.
 ## Setup
 
 ```bash
+docker compose up -d      # starts local Postgres (see docker-compose.yml)
 npm install
-npx prisma migrate dev   # creates the SQLite DB and applies migrations
-npx prisma db seed       # loads the 90 hand-authored exercises
-npm run dev              # http://localhost:3000
+npx prisma migrate dev    # applies migrations to the local Postgres DB
+npx prisma db seed        # loads the 90 hand-authored exercises
+npm run dev                # http://localhost:3000
 ```
 
 Requires a `.env` (or `.env.local`) with:
 
 ```bash
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://neurokey:neurokey_dev@localhost:5432/neurokey"
 AUTH_SECRET="<any random string>"       # NextAuth session signing secret
 
 # Robokassa billing (subscription checkout / webhook / cancel)
 ROBOKASSA_MERCHANT_LOGIN="..."
-ROBOKASSA_PASSWORD="..."
+ROBOKASSA_PASSWORD1="..."
+ROBOKASSA_PASSWORD2="..."
 ROBOKASSA_IS_TEST="1"                   # omit/0 in production
 
 BILLING_MOCK="1"                        # skip real Robokassa redirect in dev/test
