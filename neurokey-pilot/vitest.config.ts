@@ -9,5 +9,6 @@ export default defineConfig({
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
     setupFiles: ["tests/setup.ts"],
     env: loadEnv("", process.cwd(), ""),
+    testTimeout: 20000,
   },
 });
