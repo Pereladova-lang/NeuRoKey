@@ -24,8 +24,7 @@ AUTH_SECRET="<any random string>"       # NextAuth session signing secret
 
 # Robokassa billing (subscription checkout / webhook / cancel)
 ROBOKASSA_MERCHANT_LOGIN="..."
-ROBOKASSA_PASSWORD1="..."
-ROBOKASSA_PASSWORD2="..."
+ROBOKASSA_PASSWORD="..."
 ROBOKASSA_IS_TEST="1"                   # omit/0 in production
 
 BILLING_MOCK="1"                        # skip real Robokassa redirect in dev/test
