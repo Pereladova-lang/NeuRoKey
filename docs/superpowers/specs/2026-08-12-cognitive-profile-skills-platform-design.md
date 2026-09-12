@@ -83,9 +83,11 @@ interface ScaleSnapshot {
 ```ts
 interface SignalSource {
   kind: 'in-app-interaction' | 'device-screen-time' | 'visual-channel';
-  collect(context: SessionContext): SignalReading[];
+  readings: SignalReading[];
 }
 ```
+
+Реализовано как чистая структура данных (`readings`), а не поведенческий интерфейс со `collect()`, чтобы `neurokey-core` оставался пакетом без побочных эффектов — сбор сигналов остаётся ответственностью вызывающего приложения.
 
 ### 2.3 Жизненный цикл профиля
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { getChildId } from "@/lib/child-session";
-import { computeScores, type ExerciseType } from "@/lib/engine";
+import { computeScores, type ExerciseType } from "@neurokey/core";
 
 const Body = z.object({
   exerciseId: z.string().min(1),

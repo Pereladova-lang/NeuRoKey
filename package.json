@@ -1,0 +1,8 @@
+{
+  "name": "neurokey-monorepo",
+  "private": true,
+  "workspaces": [
+    "neurokey-pilot",
+    "packages/*"
+  ]
+}

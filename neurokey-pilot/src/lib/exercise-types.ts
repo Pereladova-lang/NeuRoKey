@@ -1,10 +1,3 @@
-export type CognitiveScores = {
-  attention: number;
-  memory: number;
-  logic: number;
-  control: number;
-};
-
 export type ComicContent = {
   title: string;
   panels: { image: string; speech: string | null }[]; // null = скрытая реплика

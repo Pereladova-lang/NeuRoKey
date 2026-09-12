@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getChildId } from "@/lib/child-session";
 import { checkAccess } from "@/lib/access";
-import { pickSessionTypes, type ExerciseType } from "@/lib/engine";
+import { pickSessionTypes, type ExerciseType } from "@neurokey/core";
 import { lastFirstExerciseType, currentLevelFor, hydrateSession } from "@/lib/session-service";
 
 const OPEN_SESSION_TTL_MS = 3600_000;

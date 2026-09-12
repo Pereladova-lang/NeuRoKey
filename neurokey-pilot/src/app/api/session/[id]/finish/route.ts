@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { getChildId } from "@/lib/child-session";
-import { nextStreak, earnedBadges, type ExerciseType } from "@/lib/engine";
+import { nextStreak, earnedBadges, type ExerciseType } from "@neurokey/core";
 import { TYPE_LABELS } from "@/lib/type-labels";
 
 const Body = z.object({

@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { aggregateWeek } from "@/lib/engine";
+import { aggregateWeek } from "@neurokey/core";
 import { reconcileExpiry } from "@/lib/billing";
 
 const WEEK_MS = 7 * 864e5;
