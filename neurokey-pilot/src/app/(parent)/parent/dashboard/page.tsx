@@ -1,19 +1,35 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { getParentStats } from "@/lib/parent-stats";
 import { subscriptionLabel } from "@/lib/subscription-label";
 import { ScaleBar } from "@/components/ScaleBar";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-export default async function ParentDashboardPage() {
+export default async function ParentDashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ feedback?: string }>;
+}) {
   const session = await auth();
   const parentId = session?.user?.parentId;
   if (!parentId) redirect("/parent");
 
   const stats = await getParentStats(parentId);
   if (!stats) redirect("/parent");
+
+  const { feedback } = await searchParams;
+
+  async function submitFeedback(formData: FormData) {
+    "use server";
+    const message = String(formData.get("message") ?? "").trim();
+    if (!message || !parentId) return;
+    await db.feedback.create({ data: { parentId, message } });
+    redirect("/parent/dashboard?feedback=sent");
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-6">
@@ -52,6 +68,21 @@ export default async function ParentDashboardPage() {
           </CardContent>
         </Card>
       )}
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Обратная связь</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-3">
+          {feedback === "sent" && <p className="text-sm text-muted-foreground">Спасибо, мы получили ваше сообщение!</p>}
+          <form action={submitFeedback} className="flex flex-col gap-3">
+            <Textarea name="message" placeholder="Что-то работает не так или есть идея? Напишите нам." required />
+            <Button type="submit" variant="secondary" className="w-fit">
+              Отправить
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

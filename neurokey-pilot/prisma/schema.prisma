@@ -15,6 +15,7 @@ model Parent {
   createdAt    DateTime      @default(now())
   children     Child[]
   subscription Subscription?
+  feedback     Feedback[]
 }
 
 model Child {
@@ -86,4 +87,23 @@ model Achievement {
 model Config {
   key   String @id
   value String
+}
+
+model ErrorLog {
+  id        String   @id @default(cuid())
+  source    String   // client|server
+  message   String
+  digest    String?
+  stack     String?
+  path      String?
+  parentId  String?
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  parentId  String
+  parent    Parent   @relation(fields: [parentId], references: [id])
+  message   String
+  createdAt DateTime @default(now())
 }

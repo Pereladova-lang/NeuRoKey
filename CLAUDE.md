@@ -73,12 +73,21 @@ tested without a database or network:
   not code logic); validated by `tests/unit/seed-content.test.ts`
 - `src/components/ui/` — shadcn/ui components
 - `prisma/schema.prisma` — data model (see below)
+- `src/instrumentation.ts` — Next.js `onRequestError` hook, logs uncaught server errors to
+  `ErrorLog`; `src/app/error.tsx` / `global-error.tsx` + `src/components/ClientErrorReporter.tsx`
+  cover client-side crashes the same way — self-hosted, no external error-tracking service by
+  design. `/admin` (HTTP Basic Auth via `src/proxy.ts` + `ADMIN_PASSWORD`) lists errors and parent
+  feedback (`Feedback` model, submitted from `/parent/dashboard`).
+- `src/app/privacy/`, `src/app/consent/` — privacy policy / child-data consent pages, content in
+  `src/content/legal.ts`; registration requires the consent checkbox (`Parent.consentAt`).
 
 ### Data model
 
-`Parent` 1—1 `Subscription`, 1—N `Child`. `Child` 1—N `Session` (a play session), 1—N
-`Achievement`. `Session` 1—N `SessionResult`, each pointing at an `Exercise`. `Config` is a
-key-value table for tunable values (e.g. `trialDays`).
+`Parent` 1—1 `Subscription`, 1—N `Child`, 1—N `Feedback`. `Child` 1—N `Session` (a play session),
+1—N `Achievement`. `Session` 1—N `SessionResult`, each pointing at an `Exercise`. `Config` is a
+key-value table for tunable values (e.g. `trialDays`). `ErrorLog` stores client- and server-side
+errors (see below); not related to `Parent` by foreign key (a client error can happen before
+login), only by an optional `parentId`.
 
 ### Core domain concepts
 
