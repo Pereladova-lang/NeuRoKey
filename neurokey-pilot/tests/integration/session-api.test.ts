@@ -24,6 +24,7 @@ async function registerAndLoginChild(overrides: { email: string; childName: stri
       childName: overrides.childName,
       childAge: 12,
       childPin: overrides.childPin,
+      consent: true,
     }),
   );
   const parent = await db.parent.findUnique({ where: { email: overrides.email }, include: { children: true } });
