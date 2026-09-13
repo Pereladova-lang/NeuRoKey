@@ -22,7 +22,8 @@ export default async function SubscriptionPage() {
     if (data.checkoutUrl) redirect(data.checkoutUrl);
   }
 
-  const canSubscribe = ["trial", "expired", "past_due", "canceled"].includes(subscription.status);
+  const pilotFree = process.env.BILLING_MOCK === "1";
+  const canSubscribe = !pilotFree && ["trial", "expired", "past_due", "canceled"].includes(subscription.status);
 
   return (
     <div className="mx-auto flex w-full max-w-lg flex-1 flex-col gap-6 p-6">
@@ -33,7 +34,11 @@ export default async function SubscriptionPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <p className="text-sm text-muted-foreground">{subscriptionLabel(subscription)}</p>
-          <p className="text-lg font-medium">299 ₽ / месяц</p>
+          {pilotFree ? (
+            <p className="text-sm text-muted-foreground">Сейчас идёт бесплатный пилотный период — оплата пока не требуется.</p>
+          ) : (
+            <p className="text-lg font-medium">299 ₽ / месяц</p>
+          )}
           {canSubscribe && (
             <form action={subscribe}>
               <Button type="submit">Оформить</Button>
