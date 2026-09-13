@@ -7,6 +7,7 @@ describe("schema", () => {
       data: {
         email: `t${Date.now()}@test.ru`,
         passwordHash: "x",
+        consentAt: new Date(),
         subscription: {
           create: { trialEndsAt: new Date(Date.now() + 3 * 864e5) },
         },

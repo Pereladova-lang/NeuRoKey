@@ -15,6 +15,7 @@ async function seedParentWithHistory() {
     data: {
       email,
       passwordHash: await bcrypt.hash("secret123", 10),
+      consentAt: new Date(),
       subscription: { create: { trialEndsAt: new Date(Date.now() + 3 * 864e5) } },
       children: { create: { name: "Ваня", age: 12, pin: "1234" } },
     },

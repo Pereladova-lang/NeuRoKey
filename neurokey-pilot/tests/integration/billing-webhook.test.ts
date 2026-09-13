@@ -24,6 +24,7 @@ async function seedParent() {
     data: {
       email,
       passwordHash: await bcrypt.hash("secret123", 10),
+      consentAt: new Date(),
       subscription: { create: { status: "trial", trialEndsAt: new Date(Date.now() + 3 * 864e5) } },
     },
     include: { subscription: true },

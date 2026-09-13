@@ -24,6 +24,7 @@ export default async function ParentAuthPage() {
       childName: String(formData.get("childName")),
       childAge: Number(formData.get("childAge")),
       childPin: String(formData.get("childPin")),
+      consent: formData.get("consent") === "on",
     };
     const req = new Request("http://internal/api/register", {
       method: "POST",
@@ -61,6 +62,20 @@ export default async function ParentAuthPage() {
               <Input name="childName" placeholder="Имя ребёнка" required />
               <Input name="childAge" type="number" min={11} max={14} placeholder="Возраст (11–14)" required />
               <Input name="childPin" placeholder="PIN ребёнка (4 цифры)" required pattern="\d{4}" maxLength={4} />
+              <label className="flex items-start gap-2 text-sm text-muted-foreground">
+                <input type="checkbox" name="consent" required className="mt-1" />
+                <span>
+                  Я даю{" "}
+                  <a href="/consent" target="_blank" className="underline">
+                    согласие на обработку персональных данных ребёнка
+                  </a>{" "}
+                  и принимаю{" "}
+                  <a href="/privacy" target="_blank" className="underline">
+                    политику конфиденциальности
+                  </a>
+                  .
+                </span>
+              </label>
               <Button type="submit" variant="secondary">
                 Зарегистрироваться
               </Button>

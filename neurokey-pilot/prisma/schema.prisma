@@ -11,6 +11,7 @@ model Parent {
   id           String        @id @default(cuid())
   email        String        @unique
   passwordHash String
+  consentAt    DateTime
   createdAt    DateTime      @default(now())
   children     Child[]
   subscription Subscription?

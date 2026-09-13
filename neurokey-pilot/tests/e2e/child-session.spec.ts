@@ -169,6 +169,7 @@ test.describe("child session happy path", () => {
     await registerForm.locator('input[name="childName"]').fill(childName);
     await registerForm.locator('input[name="childAge"]').fill("12");
     await registerForm.locator('input[name="childPin"]').fill("1234");
+    await registerForm.locator('input[name="consent"]').check();
     await registerForm.locator('button[type="submit"]').click();
     await page.waitForURL("**/parent/dashboard");
 

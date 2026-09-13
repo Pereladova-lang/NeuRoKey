@@ -9,6 +9,7 @@ const Body = z.object({
   childName: z.string().min(1),
   childAge: z.number().int().min(11).max(14),
   childPin: z.string().regex(/^\d{4}$/),
+  consent: z.literal(true),
 });
 
 export async function POST(req: Request) {
@@ -27,6 +28,7 @@ export async function POST(req: Request) {
     data: {
       email,
       passwordHash: await bcrypt.hash(password, 10),
+      consentAt: new Date(),
       subscription: { create: { trialEndsAt: new Date(Date.now() + trialDays * 864e5) } },
       children: { create: { name: childName, age: childAge, pin: childPin } },
     },
