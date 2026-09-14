@@ -35,6 +35,17 @@ export default async function ParentDashboardPage({
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-6">
       <h1 className="text-2xl font-semibold">Успехи ребёнка</h1>
 
+      <Card>
+        <CardContent className="flex flex-col items-start gap-3 pt-6">
+          <p className="text-sm text-muted-foreground">
+            Передайте устройство ребёнку — он войдёт по своему PIN и начнёт упражнение.
+          </p>
+          <a href="/child" className={cn(buttonVariants({ variant: "default" }), "w-fit")}>
+            Начать занятие
+          </a>
+        </CardContent>
+      </Card>
+
       {stats.children.map((child) => (
         <Card key={child.id}>
           <CardHeader>
