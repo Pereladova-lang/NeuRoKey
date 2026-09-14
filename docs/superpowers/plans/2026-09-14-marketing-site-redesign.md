@@ -47,7 +47,7 @@
 
 ---
 
-### Задача 1: Дизайн-токены и утилитарные CSS-классы
+### Task 1: Дизайн-токены и утилитарные CSS-классы
 
 **Файлы:**
 - Изменить: `src/styles/global.css`
@@ -209,7 +209,7 @@ EOF
 
 ---
 
-### Задача 2: `pilot-links.ts` и обновление `PrivacySection.astro`
+### Task 2: `pilot-links.ts` и обновление `PrivacySection.astro`
 
 **Файлы:**
 - Создать: `src/lib/pilot-links.ts`
@@ -315,7 +315,7 @@ EOF
 
 ---
 
-### Задача 3: Шапка и подвал сайта
+### Task 3: Шапка и подвал сайта
 
 **Файлы:**
 - Создать: `src/components/SiteHeader.astro`
@@ -569,7 +569,7 @@ EOF
 
 ---
 
-### Задача 4: Hero и GatedCtaForm — двухколоночная вёрстка и стили кнопки/поля
+### Task 4: Hero и GatedCtaForm — двухколоночная вёрстка и стили кнопки/поля
 
 **Файлы:**
 - Изменить: `src/components/Hero.astro`
@@ -789,7 +789,7 @@ EOF
 
 ---
 
-### Задача 5: HowItWorks — карточки и SVG-иконки
+### Task 5: HowItWorks — карточки и SVG-иконки
 
 **Файлы:**
 - Изменить: `src/components/HowItWorks.astro`
@@ -892,7 +892,7 @@ EOF
 
 ---
 
-### Задача 6: ScienceTrust — карточки шкал и Screenshots — заглушка-рамка
+### Task 6: ScienceTrust — карточки шкал и Screenshots — заглушка-рамка
 
 **Файлы:**
 - Изменить: `src/components/ScienceTrust.astro`
@@ -1016,7 +1016,7 @@ EOF
 
 ---
 
-### Задача 7: Pricing — карточки тарифов и Faq — стилизованный аккордеон
+### Task 7: Pricing — карточки тарифов и Faq — стилизованный аккордеон
 
 **Файлы:**
 - Изменить: `src/components/Pricing.astro`
@@ -1157,7 +1157,7 @@ EOF
 
 ---
 
-### Задача 8: InvestorSections — единый контейнер/карточки для `/for-investors`
+### Task 8: InvestorSections — единый контейнер/карточки для `/for-investors`
 
 **Файлы:**
 - Изменить: `src/components/InvestorSections.astro`
@@ -1276,7 +1276,7 @@ EOF
 
 ---
 
-### Задача 9: Финальная проверка адаптивности и полный прогон
+### Task 9: Финальная проверка адаптивности и полный прогон
 
 **Файлы:**
 - Тест: `tests/e2e/responsive.spec.ts` (без изменений в этой задаче — используется как регрессионный тест)
