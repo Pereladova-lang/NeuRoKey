@@ -57,6 +57,12 @@ export function RobotExercise({ content, onComplete }: ExerciseProps<RobotConten
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-semibold">{content.title}</h2>
 
+      <p className="text-lg text-muted-foreground">
+        Проведи робота 🤖 до флажка 🏁: нажимай стрелки, чтобы построить маршрут, затем жми
+        «Запустить». Красные клетки — препятствия, через них нельзя. Энергия — это сколько шагов
+        ты можешь использовать.
+      </p>
+
       <div
         className="grid gap-1"
         style={{ gridTemplateColumns: `repeat(${content.grid[0].length}, minmax(0, 1fr))` }}
